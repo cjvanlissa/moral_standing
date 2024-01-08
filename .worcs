@@ -1,0 +1,14 @@
+worcs_version: 0.1.14
+creator: vanlissa
+entry_point: manuscript/manuscript.Rmd
+recipe:
+  recipe: rmarkdown::render('manuscript/manuscript.Rmd')
+  terminal: no
+data:
+  df_anal.csv:
+    save_expression: write.csv(x = data, file = filename, row.names = FALSE)
+    load_expression: read.csv(file = filename, stringsAsFactors = TRUE)
+    codebook: codebook_df_anal.rmd
+    labels: value_labels_df_anal.yml
+checksums:
+  df_anal.csv: 50b6d082a3fd193f2ceefc5d4a56005a

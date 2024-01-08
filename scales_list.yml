@@ -1,0 +1,74 @@
+sentience:
+- sentience_1
+- sentience_2
+- sentience_3
+agency:
+- agency_1
+- agency_2
+- agency_3
+soc_cog:
+- soc_cog_1
+- soc_cog_2
+- soc_cog_3
+harmfulness:
+- harmfulness_1
+- harmfulness_2
+- harmfulness_3
+mf_harm:
+- mf_harm_1
+- mf_harm_2
+- mf_harm_3
+- mf_harm_4
+- mf_harm_5
+- mf_harm_6
+- mf_harm_7
+- mf_harm_8
+- mf_harm_9
+mf_fairness:
+- mf_fairness_1
+- mf_fairness_2
+- mf_fairness_3
+mf_liberty:
+- mf_liberty_1
+- mf_liberty_2
+- mf_liberty_3
+mf_authority:
+- mf_authority_1
+- mf_authority_2
+- mf_authority_3
+mf_loyalty:
+- mf_loyalty_1
+- mf_loyalty_2
+- mf_loyalty_3
+mf_sanctity:
+- mf_sanctity_1
+- mf_sanctity_2
+- mf_sanctity_3
+trust:
+- trust_1
+- trust_2
+- trust_3
+anomie_social_fabric:
+- anomie_social_fabric_1
+- anomie_social_fabric_2
+- anomie_social_fabric_3
+- anomie_social_fabric_4
+- anomie_social_fabric_5
+- anomie_social_fabric_6
+anomie_leadership:
+- anomie_leadership_7
+- anomie_leadership_8
+- anomie_leadership_9
+- anomie_leadership_10
+- anomie_leadership_11
+- anomie_leadership_12
+value:
+- value_power
+- value_achievement
+- value_hedonism
+- value_stimulation
+- value_selfdirection
+- value_benevolence
+- value_tradition
+- value_conformity
+- value_security

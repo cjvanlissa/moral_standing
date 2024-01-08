@@ -1,0 +1,49 @@
+target_group:
+  class: factor
+  '1': animal hi sent
+  '2': animal low sent
+  '3': environment
+  '4': family & friends
+  '5': ingroup
+  '6': outgroup
+  '7': plants
+  '8': revered
+  '9': stigmatized
+  '10': villains
+country:
+  class: factor
+  '1': Australia
+  '2': Belgium
+  '3': Brazil
+  '4': Canada_EN
+  '5': Canada_FR
+  '6': China
+  '7': England
+  '8': Estonia
+  '9': France
+  '10': Germany
+  '11': Hong Kong
+  '12': Italy
+  '13': Japan
+  '14': Latvia
+  '15': Malaysia
+  '16': Netherlands
+  '17': New Zealand
+  '18': Nigeria
+  '19': Northern Ireland
+  '20': Pakistan
+  '21': Philippines
+  '22': Poland
+  '23': Portugal
+  '24': Scotland
+  '25': Singapore
+  '26': Slovakia
+  '27': South Africa
+  '28': South Korea
+  '29': Thailand
+  '30': Turkey
+  '31': Uganda
+  '32': Ukraine
+  '33': USA_North
+  '34': USA_South
+  '35': Wales
