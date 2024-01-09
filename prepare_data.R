@@ -7,6 +7,9 @@ library(worcs)
 
 df_full <- read.csv("poms example data.csv", stringsAsFactors = TRUE)
 
+# For privacy, anonymize id
+df_full[["id"]] <- as.integer(factor(df_full$id, levels = sample(unique(df_full$id))))
+
 library(tidySEM)
 
 run_everything <- TRUE
@@ -19,8 +22,7 @@ scales_list <- yaml::read_yaml("scales_list.yml")
 
 if(any(sapply(scales_list, length) < 3)) stop("Some scales contain fewer than 3 items, not identified.")
 
-remove_variables <- c(# For privacy
-                      "id",
+remove_variables <- c(
                       # target_group is a higher order representation of this info
                       "target",
                       # and remove pre-combined scale scores
