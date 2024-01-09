@@ -38,7 +38,6 @@ fold <- sample.int(k, replace = TRUE, size = length(unique(train_id)))
 # LASSO
 
 X <- model.matrix(moral_concern ~., df_train)[, -1]
-
 if(run_everything){
   registerDoParallel(7)
   res_lasso <- cv.glmnet(
@@ -59,7 +58,6 @@ res_lasso_best <- glmnet(X, df_train$moral_concern, lambda = lambda)
 # Ranger
 if(run_everything){
   reg_task = makeRegrTask(data = df_train, target = "moral_concern", blocking = factor(train_id))
-
   # Tuning
   res_tune_ranger = tuneRanger(reg_task, measure = list(mse))
   saveRDS(res_tune_ranger, "res_tune_ranger.rdata")
@@ -91,11 +89,4 @@ rsq_lasso_test <- 1 - rss/tss
 rss <- sum((predict(res$model, newdata = df_test)$data$response - df_test$moral_concern) ^ 2)
 tss <- sum((df_test$moral_concern - mean(df_train$moral_concern)) ^ 2)
 rsq_ranger_test <- 1 - rss/tss
-
-
-# Alternative:
-#   principal component regression
-# Multi-trait multi-method model
-# Meet at code cafe, end of November?
-#
 

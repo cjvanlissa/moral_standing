@@ -106,7 +106,7 @@ tab_psychometrics <- do.call(rbind, lapply(psychmet, `[[`, 1))
 scale_scores <- data.frame(do.call(cbind, lapply(psychmet, `[[`, 2)))
 names(scale_scores) <- tab_psychometrics$variable
 
-# Dropped scales:
+# Drop scales if the following psychometrics are poor:
 drop_scales <- !(tab_psychometrics$cfi > .9 &
   tab_psychometrics$tli > .9 &
   tab_psychometrics$rmsea < .08 &
