@@ -31,12 +31,7 @@ set.seed(9953)
 fold <- sample.int(k, replace = TRUE, size = length(unique(train_id)))
 
 
-# Define hyperparameters --------------------------------------------------
 
-hyp_ranger <- expand.grid(
-  mtry = c(2, 4, 6, 10),
-  min.node.size = c(100, 200)
-)
 
 # Run analyses ------------------------------------------------------------
 
