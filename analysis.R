@@ -10,6 +10,7 @@ run_everything <- FALSE
 
 load_data()
 class(df_anal) <- "data.frame"
+# Subsample cases to run the code quickly during development:
 # df_anal <- df_anal[df_anal$id %in% sample(unique(df_anal$id), 100), ]
 
 # Split the data into train and test data sets ----------------------------
