@@ -1,8 +1,8 @@
 worcs_version: 0.1.14
 creator: vanlissa
-entry_point: manuscript/manuscript.Rmd
+entry_point: run.r
 recipe:
-  recipe: rmarkdown::render('manuscript/manuscript.Rmd')
+  recipe: source('run.r')
   terminal: no
 data:
   df_anal.csv:
