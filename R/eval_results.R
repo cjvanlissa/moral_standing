@@ -1,35 +1,30 @@
+predict.res_lasso <- function(object, newdata){
+  X <- model.matrix(moral_concern ~., newdata)[, -1]
+  lars::predict.lars(object$res, s = object$lambda1sd, type = "fit", newx = X)$fit
+}
+predict.tuneRanger <- function(object, newdata){
+  mlr:::predict.WrappedModel(object$model, newdata = newdata)$data$response
+}
+rsq <- function(model, newdata, tss){
+  preds <- predict(model, newdata)
+  rss <- sum((preds - newdata$moral_concern) ^ 2)
+  return(1 - rss/tss)
+}
+
+
 eval_results <- function(dat, res_lasso, res_ranger){
 # Evaluate performance ----------------------------------------------------
 mean_y_train <-  mean(dat$train$moral_concern)
 
 # On training data
-  X <- model.matrix(moral_concern ~., dat$train)[, -1]
-  tss <- sum((dat$train$moral_concern - mean_y_train) ^ 2)
-# Lasso
-  pred_lasso <- (X %*% res_lasso$coef)[,1, drop = TRUE]
-  rss <- sum((pred_lasso - dat$train$moral_concern) ^ 2)
-
-  rsq_lasso <- 1 - rss/tss
-
-# Ranger
-
-rss <- sum((mlr:::predict.WrappedModel(res_ranger$model, newdata = dat$train)$data$response - dat$train$moral_concern) ^ 2)
-rsq_ranger <- 1 - rss/tss
+tss <- sum((dat$train$moral_concern - mean_y_train) ^ 2)
+rsq_lasso <- rsq(res_lasso, dat$train, tss)
+rsq_ranger <- rsq(res_ranger, dat$train, tss)
 
 # On test data
-X <- model.matrix(moral_concern ~., dat$test)[, -1]
 tss <- sum((dat$test$moral_concern - mean_y_train) ^ 2)
-
-# Lasso
-pred_lasso <- (X %*% res_lasso$coef)[,1, drop = TRUE]
-rss <- sum((pred_lasso - dat$test$moral_concern) ^ 2)
-
-rsq_lasso_test <- 1 - rss/tss
-
-# Ranger
-rss <- sum((mlr:::predict.WrappedModel(res_ranger$model, newdata = dat$test)$data$response - dat$test$moral_concern) ^ 2)
-tss <- sum((dat$test$moral_concern - mean_y_train) ^ 2)
-rsq_ranger_test <- 1 - rss/tss
+rsq_lasso_test <- rsq(res_lasso, dat$test, tss)
+rsq_ranger_test <- rsq(res_ranger, dat$test, tss)
 
 data.frame(
     R2 = c(rsq_lasso, rsq_ranger, rsq_lasso_test, rsq_ranger_test),
