@@ -1,17 +1,23 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 .Random.seed|object|7eedc74f00f6ee07|||||||||||||||
-dat|stem|bada235dc49d1c1d|01688e2f00a308d6|7a428a97d9624690|-956373945||t19750.5311167577s|3098069cf3c41572|134884|rds|local|vector|||0.01||
+dat|stem|120f720e2d2b76d9|01688e2f00a308d6|bd4c3c9ad56dba77|-956373945||t19971.3768120675s|9f076cd1678b7a0d|139668|rds|local|vector|||0.03||
 df|stem|b72ed07f08277d46|f0c78c8250679058|e8ecdcb8d02567ff|-1886497314||t19750.5175145723s|c5c3e37d33e7be68|120269|rds|local|vector|||2.46||
-do_lasso|function|4db7da3628d37d6b|||||||||||||||
-do_ranger|function|bbac1f0d9f51cfcc|||||||||||||||
+do_lasso|function|aa4568a7ac82838d|||||||||||||||
+do_nn|function|ed8fa8768103e15b|||||||||||||||
+do_ranger|function|fac647f87fda3849|||||||||||||||
+do_sr|function|2998680aa58132d5|||||||||||||||
+do_tree|function|fbbde7e8a136414e|||||||||||||||
 eval_performance|function|9cd73764a93addf4|||||||||||||||
-eval_results|function|360d344537b035fa|||||||||||||||
+eval_results|function|ce1b8e53f43eab27|||||||||||||||
 fit_table|stem|f65933e47a51adc2|09eb2f735ade8f51|e9c269f60a3a4f4d|-1230061405||t19750.6659853054s|0eb7ad5ce87b6af8|200|rds|local|vector|||0.24||
 get_data|function|90dfe762b8bdee18|||||||||||||||
 get_df|function|2df55c78b644ecd1|||||||||||||||
 predict.res_lasso|function|20435a9dc41c1ec4|||||||||||||||
 predict.tuneRanger|function|06a0f98a9a685704|||||||||||||||
-res_lasso|stem|ae0a32afe27f0409|fc07543332cc03e1|13a637f91f57525c|1469347014||t19750.6659780266s|62690cf624316f22|38755|rds|local|vector|||0.44||
-res_ranger|stem|d96fa6f20a03c881|069eb2829876ee31|6cb5928102bad861|-1924469918||t19750.535403618s|ff0f2ab88eac1911|15571915|rds|local|vector|||59.86|Empty factor levels were dropped for columns country|
-rsq|function|75026ddcb94c5d01|||||||||||||||
-split_train_test|function|5744590c59996a47|||||||||||||||
+res_lasso|stem|548711870869b98a|fc07543332cc03e1|49411579444b1ea8|1469347014||t19971.4575693634s|e722cfacd1307ac9|38698|rds|local|vector|||0.33||
+res_nn|stem|c6718893f10d34a0|b1e99d7636bfa366|43570a9c448d67d8|-2005837851||t19971.4709545989s|ec519ceac14e6e00|175|rds|local|vector|||416.78||
+res_ranger|stem|e8c7f53e1ef7e4c6|069eb2829876ee31|281ae669a6b229ff|-1924469918||t19971.4594437179s|46ff45a840c4f2d5|17906983|rds|local|vector|||90.1|Empty factor levels were dropped for columns country|
+res_sr|stem|3139b2fc48a5feae|252e4d92c6014958|4fd6425e33ca2486|-2129390379||t19971.4647344759s|05bb7b409ce2772a|6384|rds|local|vector|||2.03||
+res_tree|stem|b98bef28d6918064|e3c5e8cad84e6b7e|f0267a3f3da9d4c8|-1791961258||t19971.458377151s|00e5a6bcaf64da04|725820|rds|local|vector|||9.92||
+rsq|function|2f62889e05d9c9d1|||||||||||||||
+split_train_test|function|aacd2acd96585abd|||||||||||||||

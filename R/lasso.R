@@ -11,11 +11,15 @@ do_lasso <- function(dat){
 
 
   idx <- which.max(res_lasso$cv - res_lasso$cv.error <= min(res_lasso$cv))
+
   res_lars <- lars::lars(X, Y)
+  pred <- predict(res_lars, newx = model.matrix(moral_concern ~., dat$test)[, -1], s = idx)
+
   out <- list(
     res_cv = res_lasso,
     res = res_lars,
-    lambda1sd = idx
+    tune_pars = c("lambda1sd" = res_lasso$index[idx]),
+    rsq = rsq(dat$test$moral_concern, pred$fit, mean(dat$train$moral_concern))
   )
   class(out) <- "res_lasso"
   return(out)

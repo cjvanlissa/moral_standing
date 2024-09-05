@@ -122,6 +122,8 @@ scale_scores <- scale_scores[, !drop_scales]
 
 df_anal <- data.frame(df_full[, -which(names(df_full) %in% unlist(scales_list))],
                       scale_scores)
+
+df_anal$gender <- factor(df_anal$gender, levels = c(1L, 2L), labels = c("male", "female")) # Check if labeling is correct
 open_data(df_anal)
 
 

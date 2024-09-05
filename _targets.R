@@ -38,8 +38,20 @@ list(
     command = do_ranger(dat)
   )
   , tar_target(
-    name = fit_table,
-    command = eval_results(dat, res_lasso, res_ranger)
+    name = res_tree,
+    command = do_tree(dat)
   )
+  , tar_target(
+    name = res_nn,
+    command = do_nn(dat)
+  )
+  , tar_target(
+    name = res_sr,
+    command = do_sr(dat)
+  )
+  # , tar_target(
+  #   name = fit_table,
+  #   command = eval_results(dat, res_lasso, res_ranger)
+  # )
   # , tarchetypes::tar_render(manuscript, "manuscript/manuscript.rmd")
 )

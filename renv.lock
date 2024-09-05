@@ -284,6 +284,17 @@
       ],
       "Hash": "a45594a00f5dbb073d5ec9f48592a08a"
     },
+    "RcppTOML": {
+      "Package": "RcppTOML",
+      "Version": "0.2.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "c232938949fcd8126034419cc529333a"
+    },
     "SparseM": {
       "Package": "SparseM",
       "Version": "1.81",
@@ -626,6 +637,16 @@
         "stats"
       ],
       "Hash": "f20c47fd52fae58b4e377c37bb8c335b"
+    },
+    "config": {
+      "Package": "config",
+      "Version": "0.3.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "yaml"
+      ],
+      "Hash": "8b7222e9d9eb5178eea545c0c4d33fc2"
     },
     "cpp11": {
       "Package": "cpp11",
@@ -1059,6 +1080,13 @@
       ],
       "Hash": "e0b3a53876554bd45879e596cdb10a52"
     },
+    "gramEvol": {
+      "Package": "gramEvol",
+      "Version": "2.1-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "5dc65c9c0c73bdbbfbe16f4ed1339cf9"
+    },
     "gridExtra": {
       "Package": "gridExtra",
       "Version": "2.3",
@@ -1097,6 +1125,16 @@
         "rlang"
       ],
       "Hash": "b29cf3031f49b04ab9c852c912547eef"
+    },
+    "here": {
+      "Package": "here",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "rprojroot"
+      ],
+      "Hash": "24b224366f9c2e7534d2344d10d59211"
     },
     "highr": {
       "Package": "highr",
@@ -1164,7 +1202,7 @@
     },
     "igraph": {
       "Package": "igraph",
-      "Version": "1.6.0",
+      "Version": "2.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1180,9 +1218,10 @@
         "pkgconfig",
         "rlang",
         "stats",
-        "utils"
+        "utils",
+        "vctrs"
       ],
-      "Hash": "eef74fe28b747e52288ea9e1d3600034"
+      "Hash": "c3b7d801d722e26e4cd888e042bf9af5"
     },
     "ini": {
       "Package": "ini",
@@ -1242,6 +1281,26 @@
         "methods"
       ],
       "Hash": "e1b9c55281c5adc4dd113652d9e26768"
+    },
+    "keras": {
+      "Package": "keras",
+      "Version": "2.13.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "generics",
+        "glue",
+        "magrittr",
+        "methods",
+        "reticulate",
+        "rlang",
+        "tensorflow",
+        "tfruns",
+        "zeallot"
+      ],
+      "Hash": "311b595378023f7db42eebb614cd7e75"
     },
     "knitr": {
       "Package": "knitr",
@@ -1763,6 +1822,16 @@
       ],
       "Hash": "6b8177fd19982f0020743fadbfdbd933"
     },
+    "png": {
+      "Package": "png",
+      "Version": "0.1-8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R"
+      ],
+      "Hash": "bd54ba8a0a5faded999a7aab6e46b374"
+    },
     "posterior": {
       "Package": "posterior",
       "Version": "1.5.0",
@@ -1962,6 +2031,28 @@
       ],
       "Hash": "bb5996d0bd962d214a11140d77589917"
     },
+    "reticulate": {
+      "Package": "reticulate",
+      "Version": "1.34.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Matrix",
+        "R",
+        "Rcpp",
+        "RcppTOML",
+        "graphics",
+        "here",
+        "jsonlite",
+        "methods",
+        "png",
+        "rappdirs",
+        "rlang",
+        "utils",
+        "withr"
+      ],
+      "Hash": "a69f815bcba8a055de0b08339b943f9e"
+    },
     "rlang": {
       "Package": "rlang",
       "Version": "1.1.3",
@@ -1996,6 +2087,19 @@
         "yaml"
       ],
       "Hash": "d65e35823c817f09f4de424fcdfa812a"
+    },
+    "rpart": {
+      "Package": "rpart",
+      "Version": "4.1.21",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "grDevices",
+        "graphics",
+        "stats"
+      ],
+      "Hash": "d5bc1a16e01e50e08581f0c362d3955d"
     },
     "rpf": {
       "Package": "rpf",
@@ -2286,6 +2390,31 @@
       ],
       "Hash": "0d587599172f2ffda2c09cb6b854e0e5"
     },
+    "tensorflow": {
+      "Package": "tensorflow",
+      "Version": "2.14.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "rstudio",
+      "RemoteRepo": "tensorflow",
+      "RemoteRef": "main",
+      "RemoteSha": "eeb1e66b57964c9b4b6baa26b8d462b198ce1437",
+      "Requirements": [
+        "R",
+        "config",
+        "grDevices",
+        "lifecycle",
+        "processx",
+        "reticulate",
+        "rstudioapi",
+        "tfautograph",
+        "tfruns",
+        "utils",
+        "yaml"
+      ],
+      "Hash": "35c3521bacedb0b136aba900fdbd9923"
+    },
     "testthat": {
       "Package": "testthat",
       "Version": "3.2.1",
@@ -2328,6 +2457,39 @@
       ],
       "Hash": "8b902aecf5ccc8dd073f28743513da52"
     },
+    "tfautograph": {
+      "Package": "tfautograph",
+      "Version": "0.3.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "backports",
+        "reticulate"
+      ],
+      "Hash": "f49f95df7561c477ac2370809fde9d61"
+    },
+    "tfruns": {
+      "Package": "tfruns",
+      "Version": "1.5.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "base64enc",
+        "config",
+        "jsonlite",
+        "magrittr",
+        "reticulate",
+        "rlang",
+        "rstudioapi",
+        "tidyselect",
+        "utils",
+        "whisker",
+        "yaml"
+      ],
+      "Hash": "f2193f71320c7d006fbff9880b4188f0"
+    },
     "tibble": {
       "Package": "tibble",
       "Version": "3.2.1",
@@ -2349,7 +2511,7 @@
     },
     "tidySEM": {
       "Package": "tidySEM",
-      "Version": "0.2.6",
+      "Version": "0.2.7",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2374,7 +2536,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "a590c0c93e978a058af59dec2ac7504e"
+      "Hash": "7a435124687b5b2888b26f5b527d797f"
     },
     "tidyr": {
       "Package": "tidyr",
@@ -2623,6 +2785,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "29240487a071f535f5e5d5a323b7afbd"
+    },
+    "zeallot": {
+      "Package": "zeallot",
+      "Version": "0.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ee9b643aa8331c45d8d82eb3a137c9bc"
     },
     "zip": {
       "Package": "zip",

@@ -17,7 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 # Setup for targets:
 
 library(targets)
-tar_config_set(store = "../_targets")
+tar_config_set(store = "_targets/")
+tar_load_everything()
 tar_load(model)
 # You can interact with tar objects as usual, e.g.:
 # print(model)
