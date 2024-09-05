@@ -53,5 +53,9 @@ list(
   #   name = fit_table,
   #   command = eval_results(dat, res_lasso, res_ranger)
   # )
-  # , tarchetypes::tar_render(manuscript, "manuscript/manuscript.rmd")
+  , tarchetypes::tar_render(manuscript, "manuscript.rmd", cue = tar_cue("always"))
+  , tar_file (
+    name = create_index,
+    command = { file.copy("manuscript.html", "index.html"); return("index.html")}
+    )
 )

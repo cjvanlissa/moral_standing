@@ -14,12 +14,14 @@ do_lasso <- function(dat){
 
   res_lars <- lars::lars(X, Y)
   pred <- predict(res_lars, newx = model.matrix(moral_concern ~., dat$test)[, -1], s = idx)
+  pred_train <- predict(res_lars, newx = model.matrix(moral_concern ~., dat$train)[, -1], s = idx)
 
   out <- list(
     res_cv = res_lasso,
     res = res_lars,
     tune_pars = c("lambda1sd" = res_lasso$index[idx]),
     rsq = rsq(dat$test$moral_concern, pred$fit, mean(dat$train$moral_concern))
+    , rsq_train = rsq(dat$train$moral_concern, pred_train$fit, mean(dat$train$moral_concern))
   )
   class(out) <- "res_lasso"
   return(out)

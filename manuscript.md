@@ -1,6 +1,6 @@
 Untitled
 ================
-04 September, 2024
+05 September, 2024
 
 This manuscript uses the Workflow for Open Reproducible Code in Science
 (Van Lissa et al. 2021) to ensure reproducibility and transparency. All
@@ -13,38 +13,29 @@ be removed.
 
 <!--The function below inserts a notification if the manuscript is knit using synthetic data. Make sure to insert it after load_data().-->
 
-## GitHub Documents
-
-This is an R Markdown format used for publishing markdown documents to
-GitHub. When you click the **Knit** button all R code chunks are run and
-a markdown file (.md) suitable for publishing to GitHub is generated.
-
-## Including Code
-
-You can include R code in the document as follows:
+## Results
 
 ``` r
-summary(cars)
+temp_env <- new.env()
+tar_load_everything(envir = temp_env)
+res <- grep("res_", ls(envir = temp_env), value = TRUE)
+tab_res <- data.frame(Model = res)
+res <- lapply(res, get, envir = temp_env)
+tab_res$R2_test <- sapply(res, `[[`, "rsq")
+tab_res$R2_train <- sapply(res, `[[`, "rsq_train")
+knitr::kable(tab_res, digits = 2)
 ```
 
-    ##      speed           dist       
-    ##  Min.   : 4.0   Min.   :  2.00  
-    ##  1st Qu.:12.0   1st Qu.: 26.00  
-    ##  Median :15.0   Median : 36.00  
-    ##  Mean   :15.4   Mean   : 42.98  
-    ##  3rd Qu.:19.0   3rd Qu.: 56.00  
-    ##  Max.   :25.0   Max.   :120.00
+| Model      | R2_test | R2_train |
+|:-----------|--------:|---------:|
+| res_lasso  |    0.31 |     0.33 |
+| res_nn     |    0.14 |     0.60 |
+| res_ranger |    0.29 |     0.94 |
+| res_sr     |    0.20 |     0.17 |
+| res_tree   |    0.33 |     0.37 |
 
-## Including Plots
-
-You can also embed plots, for example:
-
-![](manuscript_files/figure-gfm/pressure-1.png)<!-- -->
-
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
-
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
 
 <div id="ref-vanlissaWORCSWorkflowOpen2021" class="csl-entry">
 

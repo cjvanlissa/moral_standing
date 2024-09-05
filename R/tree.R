@@ -31,12 +31,14 @@ do_tree <- function(dat){
   tree_model <- do.call(rpart, args = Args)
 
   pred <- predict(tree_model, newdata = dat$test)
+  pred_train <- predict(tree_model, newdata = dat$train)
 
   out <- list(
     res_cv = res_tune,
     res = tree_model,
     tune_pars = as.vector(tune_grid[which.min(res_tune), , drop = FALSE]),
     rsq = rsq(dat$test$moral_concern, pred, mean(dat$train$moral_concern))
+    , rsq_train = rsq(dat$train$moral_concern, pred_train, mean(dat$train$moral_concern))
   )
   class(out) <- "res_tree"
   return(out)
