@@ -7,19 +7,25 @@ do_lasso <- function(dat){
 
   res_lasso <- lars::cv.lars(x = X,
                        y = Y,
-                       K = all.folds)
+                       K = all.folds, type = "lasso")
 
 
-  idx <- which.max(res_lasso$cv - res_lasso$cv.error <= min(res_lasso$cv))
+  idx <- which(res_lasso$cv - res_lasso$cv.error <= min(res_lasso$cv))[1]
 
-  res_lars <- lars::lars(X, Y)
-  pred <- predict(res_lars, newx = model.matrix(moral_concern ~., dat$test)[, -1], s = idx)
-  pred_train <- predict(res_lars, newx = model.matrix(moral_concern ~., dat$train)[, -1], s = idx)
+  res_lars <- lars::lars(X, Y, type = "lasso")
+  pred <- lars:::predict.lars(res_lars,
+                              newx = model.matrix(moral_concern ~., dat$test)[, -1],
+                              s = res_lasso$cv[idx],
+                              mode = "fraction")
+  pred_train <- lars:::predict.lars(res_lars,
+                              newx = model.matrix(moral_concern ~., dat$train)[, -1],
+                              s = res_lasso$cv[idx],
+                              mode = "fraction")
 
   out <- list(
     res_cv = res_lasso,
     res = res_lars,
-    tune_pars = c("lambda1sd" = res_lasso$index[idx]),
+    tune_pars = c("lambda1sd" = res_lasso$cv[idx]),
     rsq = rsq(dat$test$moral_concern, pred$fit, mean(dat$train$moral_concern))
     , rsq_train = rsq(dat$train$moral_concern, pred_train$fit, mean(dat$train$moral_concern))
   )

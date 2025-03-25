@@ -15,6 +15,8 @@ library(tuneRanger)
 library(mlr)
 library(doParallel)
 
+
+
 # Run the R scripts in the R/ folder with your custom functions:
 tar_source()
 # source("other_functions.R") # Source other scripts as needed.
@@ -30,32 +32,41 @@ list(
     command = split_train_test(df, k = 10)
   )
   , tar_target(
+    name = features,
+    command = list(
+      all = setdiff(names(dat$train), "moral_concern")
+    , target = c("sentience", "agency", "soc_cog", "harmfulness", "target_group", "utility", "similarity_humans")
+    , judge = c("mf_fairness", "mf_authority", "mf_loyalty", "mf_sanctity", "trust", "anomie_social_fabric")
+    , demographic = c("gender", "age", "country", "social_status", "conservative_econ", "conservative_social")
+    )
+  )
+  , tar_target(
+    name = dat_features,
+    command = select_features(dat, features)
+  )
+  , tar_target(
     name = res_lasso,
-    command = do_lasso(dat)
+    command = lapply(dat_features, do_lasso)
   )
   , tar_target(
     name = res_ranger,
-    command = do_ranger(dat)
+    command = lapply(dat_features, do_ranger)
   )
   , tar_target(
     name = res_tree,
-    command = do_tree(dat)
+    command = lapply(dat_features, do_tree)
   )
   , tar_target(
     name = res_nn,
-    command = do_nn(dat)
+    command = do_nn_features(dat_features)
   )
   , tar_target(
-    name = res_sr,
-    command = do_sr(dat)
+    name = analysis_results,
+    command = eval_results(dat, models = list(lasso = res_lasso, ranger = res_ranger, tree = res_tree))
   )
-  # , tar_target(
-  #   name = fit_table,
-  #   command = eval_results(dat, res_lasso, res_ranger)
-  # )
-  , tarchetypes::tar_render(manuscript, "manuscript.rmd", cue = tar_cue("always"))
-  , tar_file (
-    name = create_index,
-    command = { file.copy("manuscript.html", "index.html"); return("index.html")}
-    )
+  # , tarchetypes::tar_render(manuscript, "manuscript.rmd", cue = tar_cue("always"))
+  # , tar_file (
+  #   name = create_index,
+  #   command = { file.copy("manuscript.html", "index.html"); return("index.html")}
+  #   )
 )

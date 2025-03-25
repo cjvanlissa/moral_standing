@@ -1,8 +1,11 @@
-do_nn <- function(dat){
+do_nn <- function(dat_features){
   library(tensorflow)
   library(keras)
   reticulate::use_virtualenv("r-tensorflow")
-
+  out_return <- vector("list", length(dat_features))
+  names(out_return) <- names(dat_features)
+  for(data_name in names(dat_features)){
+    dat <- dat_features[[data_name]]
   # Prep data
   train_dataset <- dat$train
   test_dataset <- dat$test
@@ -57,17 +60,19 @@ do_nn <- function(dat){
 
   pred <- predict(model, test_features)
   pred_train <- predict(model, train_features)
-  save_model_tf(model, 'my_model/')
+  save_model_tf(model, file.path('my_model', data_name))
 
   out <- list(
     #res_cv = res_tune_ranger,
-    res = quote(load_model_tf('my_model/')),
+    res = quote(load_model_tf(file.path('my_model', data_name))),
     tune_pars = vector("numeric"),
     rsq = rsq(test_labels, pred, mean(train_labels)),
     rsq_train =  rsq(train_labels, pred_train, mean(train_labels))
   )
   class(out) <- "res_nn"
-  return(out)
+  out_return[[data_name]] <- out
+  }
+  return(out_return)
 }
 
 
