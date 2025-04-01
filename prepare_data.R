@@ -4,15 +4,8 @@
 # to store the data.
 
 library(worcs)
-library(cowplot)
 library(rio)
-library(grid)
-library(gridExtra)
-library(broom)
-library(psych)
-library(ICC)
-library(viridis)
-library(tidyverse)
+library(dplyr)
 
 # Prepare data --------------------------------------------------------------------------------
 
@@ -72,12 +65,11 @@ data$gender <- ifelse(data$gender == 1, "male", "female")
 data$gender <- as.factor(data$gender)
 
 # Recode diet variable
-data$diet <- fct_recode(as.factor(data$diet),
-                        "omnivore" = "1",
-                        "restricted_omnivore" = "2",
-                        "vegetarian" = "3",
-                        "vegan" = "4",
-                        "other" = "5")
+data$diet <- factor(data$diet, levels = 1:5, labels = c("omnivore",
+                                                        "restricted_omnivore",
+                                                        "vegetarian",
+                                                        "vegan",
+                                                        "other"))
 
 # Recode ethnicity self-identification variable to dummy variables for each answer option
 data$ethnic_white <- ifelse(grepl("1", data$ethnicity), 1,0)
