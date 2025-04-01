@@ -7,13 +7,13 @@ dat|stem|456e77339acce46d|01688e2f00a308d6|b0154b0546318f5f|-956373945||t20171.5
 dat_features|stem|890f05b938275493|b5429de74ef8714b|b34d20ed7f1e129f|-1085853772||t20172.4380805635s|59dab6a9ef3edb27|336913|rds|local|vector|||0.03||
 df|stem|a22f60ddce990567|f0c78c8250679058|e8ecdcb8d02567ff|-1886497314||t20171.5899361375s|c5c3e37d33e7be68|120269|rds|local|vector|||4.39||
 do_lasso|function|0485126f78fa6bc0|||||||||||||||
-do_nn|function|ed8fa8768103e15b|||||||||||||||
+do_nn|function|c394112d3df39cca|||||||||||||||
 do_ranger|function|ffea00162162c495|||||||||||||||
 do_sr|function|2998680aa58132d5|||||||||||||||
 do_tree|function|661af5c3c4682cc1|||||||||||||||
 etasq|function|e4d7f9f7afb8de4e|||||||||||||||
 eval_performance|function|9cd73764a93addf4|||||||||||||||
-eval_results|function|607bdda1eaf2f43d|||||||||||||||
+eval_results|function|f8c1bd541620b908|||||||||||||||
 eval_results2|function|e2d66cdef693102a|||||||||||||||
 features|stem|34f0127a8d916ff7|d3566ef26f2fe8fd|0bd009bd1d534512|1384881709||t20172.4378553009s|0e56fdca6a5a4864|301|rds|local|vector|||0||
 fit_table|stem|f65933e47a51adc2|09eb2f735ade8f51|e9c269f60a3a4f4d|-1230061405||t19750.6659853054s|0eb7ad5ce87b6af8|200|rds|local|vector|||0.24||
@@ -22,9 +22,10 @@ get_df|function|2df55c78b644ecd1|||||||||||||||
 manuscript|stem|a22469755cb4edb1|1caf28c03f404100|ef46db3751d8e999|-2124760869|manuscript.md*manuscript.rmd*manuscript_files|t19971.5656959771s|f56a5b12b9f749e3|7066|file|local|vector|||1.25||
 predict.res_lasso|function|c84f60f0f3834e9a|||||||||||||||
 predict.res_ranger|function|c031269346292166|||||||||||||||
+predict.res_tree|function|28d2d634ea94262d|||||||||||||||
 predict.tuneRanger|function|06a0f98a9a685704|||||||||||||||
 res_lasso|stem|304e01f60d5355d2|fbe57ca6ecfe7132|08402371faa8cd41|1469347014||t20172.4939074832s|4a1a730d64677844|63224|rds|local|vector|||1.73||
-res_nn|stem|c6718893f10d34a0|b1e99d7636bfa366|43570a9c448d67d8|-2005837851||t19971.4709545989s|ec519ceac14e6e00|175|rds|local|vector|||416.78||
+res_nn|stem|c6718893f10d34a0|ab6695a0849a5a5e|ad6e7a316ad2dc81|-2005837851||t19971.4709545989s||175|rds|local|vector|||1.7||Valid installation of TensorFlow not found.Python environments searched for tensorflow package C\Users\TSBMTO\Documents\.virtualenvs\rtensorflow\Scripts\python.exePython exception encountered Traceback most recent call last  File D\Caspar\moral_standing\renv\library\R4.3\x86_64w64mingw32\reticulate\python\rpytools\loader.py, line 119, in _find_and_load_hook    return _run_hookname, _hook  File D\Caspar\moral_standing\renv\library\R4.3\x86_64w64mingw32\reticulate\python\rpytools\loader.py, line 93, in _run_hook    module  hook  File D\Caspar\moral_standing\renv\library\R4.3\x86_64w64mingw32\reticulate\python\rpytools\loader.py, line 117, in _hook    return _find_and_loadname, import_  File C\Users\TSBMTO\DOCUME1\VIRTUA1\RTENS1\lib\sitepackages\tensorflow\__init__.py, line 38, in module    from tensorflow.python.tools import module_util as _module_util  File D\Caspar\moral_standing\renv\library\R4.3\x86_64w64mingw32\reticulate\python\rpytools\loader.py, line 119, in _find_and_load_hook    return _run_hookname, _hook  File D\Caspar\moral_standing\renv\library\R4.3\x86_64w64mingw32\reticulate\python\rpytools\loader.py, line 93, in _run_hook    module  hook  File D\Caspar\moral_standing\renv\library\R4.3\x86_64w64mingw32\reticulate\python\rpytools\loader.py, line 117, in _hook    return _find_and_loadname, import_  File D\Caspar\moral_standing\renv\library\R4.3\x86_64w64mingw32\reticulate\python\rpytools\loader.py, line 119, in _find_and_load_hook    return _run_hookname, _hook  File D\Caspar\moral_standing\renv\library\R4.3\x86_64w64mingw32\reticulate\python\rpytools\loader.py, line 93, in _run_hook    module  hook  File D\Caspar\moral_standing\renv\library\R4.3\x86_64w64mingw32\reticulate\python\rpytools\loader.py, line 117, in _hook    return _find_and_loadname, import_  File C\Users\TSBMTO\DOCUME1\VIRTUA1\RTENS1\lib\sitepackages\tensorflow\python\__init__.py, line 36, in module
 res_ranger|stem|e76fd836271f0b64|2b65b5fb5eb3254d|6082ba9bd1fb3e4d|-1924469918||t20172.4412385341s|d3c680759ebd4c21|22785685|rds|local|vector|||266.53|Empty factor levels were dropped for columns country. Empty factor levels were dropped for columns country|
 res_sr|stem|3139b2fc48a5feae|252e4d92c6014958|4fd6425e33ca2486|-2129390379||t19971.4647344759s|05bb7b409ce2772a|6384|rds|local|vector|||2.03||
 res_tree|stem|7cce44ca83375903|76f9258bf7a1d3d0|5115c5cb0e9a0262|-1791961258||t20172.5204147687s|f51eebb6b12b7f7f|1907333|rds|local|vector|||36.89||

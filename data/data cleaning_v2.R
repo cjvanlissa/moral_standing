@@ -1,9 +1,11 @@
-# In this file, write the R-code necessary to load your original data file
-# (e.g., an SPSS, Excel, or SAS-file), and convert it to a data.frame. Then,
-# use the function open_data(your_data_frame) or closed_data(your_data_frame)
-# to store the data.
+# R script to analyze data for:
+# Toward a predictive model of moral concern
+# R code by: Bastian Jaeger
+# Date: 26/03/2025
 
-library(worcs)
+# Setup ---------------------------------------------------------------------------------------
+
+# Load packages
 library(cowplot)
 library(rio)
 library(grid)
@@ -17,33 +19,35 @@ library(tidyverse)
 # Prepare data --------------------------------------------------------------------------------
 
 # Load data from both parts
-data1 <- import("./data/simdata_part1_raw.csv")
-data2 <- import("./data/simdata_part2_raw.csv")
+data1 <- read.csv("./data/simdata_part1_raw.csv", stringsAsFactors = FALSE)
+data2 <- read.csv("./data/simdata_part2_raw.csv", stringsAsFactors = FALSE)
 
 # Label nationality of participants from data set that includes labeled values
-data1_labeled <- import("./data/simdata_part1_labels_raw.csv")
+data1_labeled <- read.csv("./data/simdata_part1_labels_raw.csv", stringsAsFactors = FALSE)
 data1$nationality <- data1_labeled$nationality
 rm("data1_labeled")
 
 # Delete data from previewing the survey, from unfinished surveys, and from participants who did not pledge
-data1 <- filter(data1, Status == 2, Finished == 1)
-data2 <- filter(data2, Status == 2, Finished == 1)
+data1 <- data1[with(data1, {Status == 2 & Finished == 1}), ]
+data2 <- data1[with(data2, {Status == 2 & Finished == 1}), ]
 
 # Show % of participants who did not pledge to complete the survey in a careful manner and exclude
-nrow(filter(data1, pledge == 2))/nrow(data1)*100 # Part 1
-nrow(filter(data2, pledge == 2))/nrow(data2)*100 # Part 2
-data1 <- filter(data1, pledge == 1)
-data2 <- filter(data2, pledge == 1)
+prop.table(table(data1$pledge))*100 # Part 1
+prop.table(table(data2$pledge))*100 # Part 2
+data1 <- data1[with(data1, {pledge == 1}), ]
+data2 <- data1[with(data2, {pledge == 1}), ]
 
 # Show % of participants who ignored instructions to not complete the study on a phone and exclude
-nrow(filter(data1, device == 4))/nrow(data1)*100 # Part 1
-nrow(filter(data2, device == 4))/nrow(data2)*100 # Part 2
+prop.table(table(data1$device == 4))*100 # Part 1
+prop.table(table(data2$device == 4))*100 # Part 2
 #data1 <- filter(data1, device != 4)
 #data2 <- filter(data2, device != 4)
 
 # Select relevant variables
-data1 <- select(data1, prolificid:comment, -gender_9_TEXT)
-data2 <- select(data2, prolificid:comment, -gender_9_TEXT)
+data1[["gender_9_TEXT"]] <- NULL
+data2[["gender_9_TEXT"]] <- NULL
+data1 <- data1[, which(names(data1) == "prolificid"):which(names(data1) == "comment")]
+data2 <- data2[, which(names(data2) == "prolificid"):which(names(data2) == "comment")]
 
 # Rename variables that were assessed in both parts
 data2 <- rename(data2,
@@ -329,144 +333,9 @@ data <- select(data, id, prolificid, entity, contains("moral_concern"), contains
                gender, age, nationality, contains("ethnic"), pet, pet_attachment, pet_childhood, conservative,
                religious, education, income, diet, device, device2, comment, comment2)
 
-# worcs::closed_data(data)
 # Save the cleaned data set
 #write_csv(data, "simdata_clean.csv")
 
 # Save a data frame that lists all variable names (to create the codebook)
 #codebook <- tibble(variable_name = names(data), description = NA)
 #write_csv(codebook, "variable_names.csv")
-
-
-
-
-df_full <- data
-
-# For privacy, anonymize id
-df_full[["id"]] <- as.integer(factor(df_full$id, levels = sample(unique(df_full$id))))
-df_full[c("prolificid", grep("^comment", names(df_full), value = TRUE))] <- NULL
-
-library(tidySEM)
-
-
-
-# Select items ------------------------------------------------------------
-
-desc <- tidySEM::descriptives(df_full)
-
-scales_list <- yaml::read_yaml("scales_list.yml")
-
-selected_variables <- readxl::read_xlsx("./data/codebook.xlsx")
-selected_variables <- selected_variables[rowSums(selected_variables[, c("target attribute predictor", "judge attribute predictor", "demographic predictor")], na.rm = TRUE) > 0, ]
-
-# remove_variables <- c(
-#                       # target_group is a higher order representation of this info
-#                       "target",
-#                       # and remove pre-combined scale scores
-#                       "sentience", "agency", "soc_cog", "harmfulness", "mf_harm",
-#                         "mf_fairness", "mf_liberty", "mf_authority", "mf_loyalty", "mf_sanctity",
-#                         "trust", "anomie_social_fabric", "anomie_leadership", "value",
-#                         "conservative")
-#
-# df_full[remove_variables] <- NULL
-
-yvar <- "moral_concern"
-
-xvars <- selected_variables$variable_name
-
-# Missing data ------------------------------------------------------------
-
-# Code missings
-# TO DO
-
-# # Descriptives
-# desc <- tidySEM::descriptives(df)
-#
-# # Impute
-# if(run_everything){
-#   set.seed(9808)
-#   df_imp <- missRanger::missRanger(df)
-#   saveRDS(df_imp, "df_imp.RData")
-# } else {
-#   df_imp <- readRDS("manuscript/df_imp.RData")
-# }
-
-
-# Psychometrics -----------------------------------------------------------
-
-library(data.table)
-df <- data.table(df_full)
-df <- df[, .SD, .SDcols = unlist(scales_list)]
-desc <- tidySEM::descriptives(df)
-# Variables with < 10 unique values are treated as ordinal
-is_ordered <- desc$name[desc$unique < 10]
-df[, (is_ordered) := lapply(.SD, ordered), .SDcols = is_ordered]
-
-# Make data long for multilevel CFA
-psychmet <- lapply(names(scales_list), function(scal){
-  #scal = names(scales_list)[1]
-  indicators <- scales_list[[scal]]
-  syntx <- paste0(scal, "=~", paste0(indicators,
-      collapse = " + "
-    ))
-  if(length(indicators) == 2){
-    syntx <- paste0(scal, "=~", paste0(paste0("a*", indicators),
-                                       collapse = " + "
-    ))
-  }
-  df_tmp <- df[, .SD, .SDcols = indicators]
-
-  # Any ordered
-  is_ordr <- sapply(df_tmp, inherits, what = "ordered")
-  # CFA
-  res <- lavaan::cfa(
-      model = syntx,
-      data = df_tmp,
-      ordered = if(any(is_ordr)){names(df_tmp)[is_ordr]} else {NULL},
-      std.lv = TRUE,
-      auto.fix.first = FALSE
-    )
-
-  fits <- try(tidySEM::table_fit(res)[, c("Parameters", "chisq", "df", "cfi", "tli", "rmsea", "srmr")], silent = TRUE)
-  if(inherits(fits, "try-error")){
-    fits <- structure(list(Parameters = NA, chisq = NA, df = NA,
-                           cfi = NA, tli = NA, rmsea = NA,
-                           srmr = NA), class = c("tidy_fit", "data.frame"
-                           ), row.names = c(NA, -1L))
-  }
-  tab <- data.frame(variable = scal,
-                    items = length(indicators),
-                    fits)
-
-  tab$comp_rel <- semTools::compRelSEM(res, ord.scale = any(is_ordr))
-  scores <- rowMeans(df_tmp[, lapply(.SD, as.numeric), .SDcols = indicators])
-  return(
-    list(
-      psychometrics = tab,
-      scores = scores
-    )
-  )
-})
-
-tab_psychometrics <- do.call(rbind, lapply(psychmet, `[[`, 1))
-scale_scores <- data.frame(do.call(cbind, lapply(psychmet, `[[`, 2)))
-names(scale_scores) <- tab_psychometrics$variable
-
-# Drop scales if the following psychometrics are poor:
-drop_scales <- !(tab_psychometrics$cfi > .9 &
-  tab_psychometrics$tli > .9 &
-  tab_psychometrics$rmsea < .08 &
-  tab_psychometrics$comp_rel > .65)
-
-tab_psychometrics[drop_scales, ]
-
-tab_psychometrics <- tab_psychometrics[!drop_scales, ]
-
-write.csv(tab_psychometrics, "tab_psychometrics.csv", row.names = F)
-
-scale_scores <- scale_scores[, !drop_scales]
-
-df_anal <- data.frame(df_full[, c("id", yvar, setdiff(selected_variables$variable_name, names(scales_list)))],
-                      scale_scores)
-
-open_data(df_anal)

@@ -58,7 +58,7 @@ list(
   )
   , tar_target(
     name = res_nn,
-    command = do_nn_features(dat_features)
+    command = do_nn(dat_features)
   )
   , tar_target(
     name = analysis_results,

@@ -1,0 +1,2 @@
+c("variable_name", "description", "variable type", "target attribute predictor", 
+"judge attribute predictor", "demographic predictor")
