@@ -92,8 +92,8 @@ data$pet_childhood <- ifelse(data$pet == 0 & is.na(data$pet_attachment), 0, data
 # Reverse-score Social Dominance Orientation items and create average score
 data$sdo_3 <- (data$sdo_3 - 8) * -1
 data$sdo_4 <- (data$sdo_4 - 8) * -1
-data$sdo_7 <- (data$sdo_8 - 8) * -1
-data$sdo_7 <- (data$sdo_8 - 8) * -1
+data$sdo_7 <- (data$sdo_7 - 8) * -1
+data$sdo_8 <- (data$sdo_8 - 8) * -1
 
 data$sdo <- rowMeans(select(data, sdo_1:sdo_8))
 
@@ -270,37 +270,8 @@ data <- arrange(data, by = id)
 rm("temp")
 
 # Rename entities
-data$entity <- fct_recode(as.factor(data$entity),
-                          "family member" = "concern_1_1",
-                          "transgender person" = "concern_1_2",
-                          "charity worker" = "concern_1_3",
-                          "American citizen" = "concern_1_4",
-                          "Chinese citize" = "concern_1_5",
-                          "asylum seeker" = "concern_1_6",
-                          "member of opposing political party" = "concern_1_7",
-                          "dolphin" = "concern_1_8",
-                          "old-growth forest" = "concern_1_9",
-                          "fish" = "concern_1_10",
-                          "apple tree" = "concern_1_11",
-                          "murderer" = "concern_1_12",
-                          "human in a persistent vegetative state" = "concern_1_13",
-                          "1-year-old human infant" = "concern_1_14",
-                          "6-week-old human embryo" = "concern_1_15",
-                          "24-week-old human fetus" = "concern_1_16",
-                          "octopus" = "concern_1_17",
-                          "dog" = "concern_1_18",
-                          "pig" = "concern_1_19",
-                          "chicken" = "concern_1_20",
-                          "shrimp" = "concern_1_21",
-                          "rat" = "concern_1_22",
-                          "pigeon" = "concern_1_23",
-                          "spider" = "concern_1_24",
-                          "chimpanzee" = "concern_1_25",
-                          "wolf" = "concern_1_26",
-                          "deer" = "concern_1_27",
-                          "earthworm" = "concern_1_28",
-                          "butterfly" = "concern_1_29",
-                          "ChatGPT (advanced AI system)" = "concern_1_30")
+data$entity <- factor(data$entity, levels = c("concern_1_1","concern_1_2","concern_1_3","concern_1_4","concern_1_5","concern_1_6","concern_1_7","concern_1_8","concern_1_9","concern_1_10","concern_1_11","concern_1_12","concern_1_13","concern_1_14","concern_1_15","concern_1_16","concern_1_17","concern_1_18","concern_1_19","concern_1_20","concern_1_21","concern_1_22","concern_1_23","concern_1_24","concern_1_25","concern_1_26","concern_1_27","concern_1_28","concern_1_29","concern_1_30"),
+                      labels = c("family member","transgender person","charity worker","American citizen","Chinese citize","asylum seeker","member of opposing political party","dolphin","old-growth forest","fish","apple tree","murderer","human in a persistent vegetative state","1-year-old human infant","6-week-old human embryo","24-week-old human fetus","octopus","dog","pig","chicken","shrimp","rat","pigeon","spider","chimpanzee","wolf","deer","earthworm","butterfly","ChatGPT (advanced AI system)"))
 
 # Create average scores for moral concern, perceived sentience, agency, social-cognitive capacities and harmfulness
 data$moral_concern <- rowMeans(select(data, moral_concern_1:moral_concern_3))
@@ -314,12 +285,12 @@ data <- left_join(data, select(data_full, prolificid, sdo_1:util_ih, device2, co
                                -ethnicity, -ethnicity_7_TEXT), by = "id")
 
 # Order variables
-data <- select(data, id, prolificid, entity, contains("moral_concern"), contains("sentience"), contains("agency"),
-               contains("socog"), contains("harmful"), beautiful, similar, utility, vulnerable, contains("sdo"),
-               contains("rwa"), contains("hexaco"), trust, contains("aot"), contains("moraldisgust"),
-               contains("empathy"), contains("moralfound"), contains("identity"), contains("util"),
-               gender, age, nationality, contains("ethnic"), pet, pet_attachment, pet_childhood, conservative,
-               religious, education, income, diet, device, device2, comment, comment2)
+# data <- select(data, id, prolificid, entity, contains("moral_concern"), contains("sentience"), contains("agency"),
+#                contains("socog"), contains("harmful"), beautiful, similar, utility, vulnerable, contains("sdo"),
+#                contains("rwa"), contains("hexaco"), trust, contains("aot"), contains("moraldisgust"),
+#                contains("empathy"), contains("moralfound"), contains("identity"), contains("util"),
+#                gender, age, nationality, contains("ethnic"), pet, pet_attachment, pet_childhood, conservative,
+#                religious, education, income, diet, device, device2, comment, comment2)
 
 # worcs::closed_data(data)
 # Save the cleaned data set
@@ -345,9 +316,9 @@ library(tidySEM)
 # Select items ------------------------------------------------------------
 
 desc <- tidySEM::descriptives(df_full)
+write.csv(desc, "item_descriptives.csv", row.names = FALSE)
 
 scales_list <- yaml::read_yaml("scales_list.yml")
-
 selected_variables <- readxl::read_xlsx("./data/codebook.xlsx")
 selected_variables <- selected_variables[rowSums(selected_variables[, c("target attribute predictor", "judge attribute predictor", "demographic predictor")], na.rm = TRUE) > 0, ]
 
@@ -443,18 +414,18 @@ psychmet <- lapply(names(scales_list), function(scal){
 tab_psychometrics <- do.call(rbind, lapply(psychmet, `[[`, 1))
 scale_scores <- data.frame(do.call(cbind, lapply(psychmet, `[[`, 2)))
 names(scale_scores) <- tab_psychometrics$variable
+write.csv(tab_psychometrics, "tab_psychometrics.csv", row.names = F)
+
+if(!all(sapply(names(scale_scores), function(n) isTRUE(all(scale_scores[[n]] == df_full[[n]]))))){
+  stop("Bastian's scales are not the same as Caspar's")
+}
 
 # Drop scales if the following psychometrics are poor:
-drop_scales <- !(tab_psychometrics$cfi > .9 &
-  tab_psychometrics$tli > .9 &
-  tab_psychometrics$rmsea < .08 &
-  tab_psychometrics$comp_rel > .65)
+drop_scales <- which(tab_psychometrics$comp_rel < .6)
+
 
 tab_psychometrics[drop_scales, ]
-
 tab_psychometrics <- tab_psychometrics[!drop_scales, ]
-
-write.csv(tab_psychometrics, "tab_psychometrics.csv", row.names = F)
 
 scale_scores <- scale_scores[, !drop_scales]
 
