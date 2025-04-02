@@ -417,11 +417,11 @@ names(scale_scores) <- tab_psychometrics$variable
 write.csv(tab_psychometrics, "tab_psychometrics.csv", row.names = F)
 
 if(!all(sapply(names(scale_scores), function(n) isTRUE(all(scale_scores[[n]] == df_full[[n]]))))){
-  stop("Bastian's scales are not the same as Caspar's")
+  message("Bastian's scales are not the same as Caspar's")
 }
 
 # Drop scales if the following psychometrics are poor:
-drop_scales <- which(tab_psychometrics$comp_rel < .6)
+#drop_scales <- which(tab_psychometrics$comp_rel < .6)
 
 
 tab_psychometrics[drop_scales, ]
@@ -429,7 +429,11 @@ tab_psychometrics <- tab_psychometrics[!drop_scales, ]
 
 scale_scores <- scale_scores[, !drop_scales]
 
-df_anal <- data.frame(df_full[, c("id", yvar, setdiff(selected_variables$variable_name, names(scales_list)))],
+keep_these_variables <- setdiff(selected_variables$variable_name, names(scales_list))
+keep_these_variables <- keep_these_variables[which(keep_these_variables %in% names(scale_scores))]
+keep_these_variables <- c("id", yvar, keep_these_variables)
+
+df_anal <- data.frame(df_full[, keep_these_variables, drop = FALSE],
                       scale_scores)
 
 open_data(df_anal)

@@ -1,8 +1,6 @@
 get_data <- function(){
   out <- worcs::load_data(to_envir = FALSE)$df_anal
   class(out) <- "data.frame"
-  # Subsample cases to run the code quickly during development:
-  out <- out[out$id %in% sample(unique(out$id), 200), ]
   return(out)
 }
 
@@ -15,5 +13,15 @@ select_features <- function(dat, features){
     dat
   })
   names(out) <- names(features)
+  return(out)
+}
+
+get_features <- function(dat, flnm){
+  selected_variables <- readxl::read_xlsx(flnm)
+  selected_variables <- selected_variables[rowSums(selected_variables[, c("target attribute predictor", "judge attribute predictor", "demographic predictor")], na.rm = TRUE) > 0, ]
+  out <- lapply(selected_variables[, c("target attribute predictor", "judge attribute predictor", "demographic predictor")], function(i){ selected_variables$variable_name[which(i > 0)] })
+  names(out) <- gsub(" .*$", "", names(out))
+  out <- lapply(out, function(vs){ vs[which(vs %in% names(dat$train))]})
+  out <- c(list(all = unique(unlist(out))), out)
   return(out)
 }

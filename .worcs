@@ -11,4 +11,4 @@ data:
     codebook: codebook_df_anal.rmd
     labels: value_labels_df_anal.yml
 checksums:
-  df_anal.csv: 5bbbd69865959c0fac39384117684376
+  df_anal.csv: 1aa8e756712681e4336d4e5ea51864b1

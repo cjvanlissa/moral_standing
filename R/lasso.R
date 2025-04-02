@@ -5,7 +5,7 @@ do_lasso <- function(dat){
   #all.folds <- lars:::cv.folds(length(dat$train$moral_concern), 10)
   all.folds <- dat$folds
 
-  res_lasso <- lars::cv.lars(x = X,
+  res_lasso <- cv.lars(x = X,
                        y = Y,
                        K = all.folds, type = "lasso")
 
