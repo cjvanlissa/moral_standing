@@ -12,8 +12,8 @@ do_ranger <- function(dat){
     res_cv = res_tune_ranger,
     res = res_tune_ranger$model$learner.model,
     tune_pars = unlist(res_tune_ranger$recommended.pars)[c("mtry", "min.node.size")],
-    rsq = rsq(dat$test$moral_concern, pred, mean(dat$train$moral_concern))
-    , rsq_train = rsq(dat$train$moral_concern, pred_train, mean(dat$train$moral_concern))
+    rsq = rsq_numeric(dat$test$moral_concern, pred, mean(dat$train$moral_concern))
+    , rsq_train = rsq_numeric(dat$train$moral_concern, pred_train, mean(dat$train$moral_concern))
   )
   class(out) <- "res_ranger"
   return(out)

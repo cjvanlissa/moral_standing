@@ -197,6 +197,30 @@
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
       "Repository": "CRAN"
     },
+    "DEoptimR": {
+      "Package": "DEoptimR",
+      "Version": "1.1-3-1",
+      "Source": "Repository",
+      "Date": "2024-11-23",
+      "Title": "Differential Evolution Optimization in Pure R",
+      "Authors@R": "c( person(c(\"Eduardo\", \"L. T.\"), \"Conceicao\", role = c(\"aut\", \"cre\"), email = \"mail@eduardoconceicao.org\"), person(\"Martin\", \"Maechler\", role = \"ctb\", email = \"maechler@stat.math.ethz.ch\", comment = c(ORCID = \"0000-0002-8685-9910\")) )",
+      "URL": "svn://svn.r-forge.r-project.org/svnroot/robustbase/pkg/DEoptimR",
+      "Description": "Differential Evolution (DE) stochastic heuristic algorithms for global optimization of problems with and without general constraints. The aim is to curate a collection of its variants that (1) do not sacrifice simplicity of design, (2) are essentially tuning-free, and (3) can be efficiently implemented directly in the R language. Currently, it provides implementations of the algorithms 'jDE' by Brest et al. (2006) <doi:10.1109/TEVC.2006.872133> for single-objective optimization and 'NCDE' by Qu et al. (2012) <doi:10.1109/TEVC.2011.2161873> for multimodal optimization (single-objective problems with multiple solutions).",
+      "Imports": [
+        "stats"
+      ],
+      "Enhances": [
+        "robustbase"
+      ],
+      "License": "GPL (>= 2)",
+      "Author": "Eduardo L. T. Conceicao [aut, cre], Martin Maechler [ctb] (<https://orcid.org/0000-0002-8685-9910>)",
+      "Maintainer": "Eduardo L. T. Conceicao <mail@eduardoconceicao.org>",
+      "Repository": "CRAN",
+      "Repository/R-Forge/Project": "robustbase",
+      "Repository/R-Forge/Revision": "1008",
+      "Repository/R-Forge/DateTimeStamp": "2024-11-23 19:13:45",
+      "NeedsCompilation": "no"
+    },
     "Deriv": {
       "Package": "Deriv",
       "Version": "4.1.6",
@@ -939,6 +963,61 @@
       "Author": "Ben Goodrich [cre, aut], Joshua Pritikin [ctb], Andrew Gelman [aut], Bob Carpenter [aut], Matt Hoffman [aut], Daniel Lee [aut], Michael Betancourt [aut], Marcus Brubaker [aut], Jiqiang Guo [aut], Peter Li [aut], Allen Riddell [aut], Marco Inacio [aut], Mitzi Morris [aut], Jeffrey Arnold [aut], Rob Goedman [aut], Brian Lau [aut], Rob Trangucci [aut], Jonah Gabry [aut], Alp Kucukelbir [aut], Robert Grant [aut], Dustin Tran [aut], Michael Malecki [aut], Yuanjun Gao [aut], Hamada S. Badr [aut] (<https://orcid.org/0000-0002-9808-2344>), Trustees of Columbia University [cph], Lawrence Livermore National Security [cph] (CVODES), The Regents of the University of California [cph] (CVODES), Southern Methodist University [cph] (CVODES)",
       "Maintainer": "Ben Goodrich <benjamin.goodrich@columbia.edu>",
       "Repository": "CRAN"
+    },
+    "VIM": {
+      "Package": "VIM",
+      "Version": "6.2.2",
+      "Source": "Repository",
+      "Title": "Visualization and Imputation of Missing Values",
+      "Authors@R": "c( person(\"Matthias\", \"Templ\", email = \"matthias.templ@gmail.com\", role = c(\"aut\",\"cre\")), person(\"Alexander\", \"Kowarik\", email = \"alexander.kowarik@statistik.gv.at\", role = c(\"aut\"), comment=c(ORCID=\"0000-0001-8598-4130\")), person(\"Andreas\", \"Alfons\", role = c(\"aut\")), person(\"Gregor\", \"de Cillia\", email = \"gregor.decillia@statistik.gv.at\", role = c(\"aut\")), person(\"Bernd\", \"Prantner\", role = c(\"ctb\")), person(\"Wolfgang\", \"Rannetbauer\", role = c(\"aut\")))",
+      "Depends": [
+        "R (>= 3.5.0)",
+        "colorspace",
+        "grid"
+      ],
+      "Imports": [
+        "car",
+        "grDevices",
+        "magrittr",
+        "robustbase",
+        "stats",
+        "sp",
+        "vcd",
+        "MASS",
+        "nnet",
+        "e1071",
+        "methods",
+        "Rcpp",
+        "utils",
+        "graphics",
+        "laeken",
+        "ranger",
+        "data.table(>= 1.9.4)"
+      ],
+      "Suggests": [
+        "dplyr",
+        "tinytest",
+        "knitr",
+        "rmarkdown",
+        "reactable",
+        "covr",
+        "withr"
+      ],
+      "Description": "New tools for the visualization of missing and/or imputed values are introduced, which can be used for exploring the data and the structure of the missing and/or imputed values. Depending on this structure of the missing values, the corresponding methods may help to identify the mechanism generating the missing values and allows to explore the data including missing values. In addition, the quality of imputation can be visually explored using various univariate, bivariate, multiple and multivariate plot methods. A graphical user interface available in the separate package VIMGUI allows an easy handling of the implemented plot methods.",
+      "LazyData": "TRUE",
+      "ByteCompile": "TRUE",
+      "License": "GPL (>= 2)",
+      "URL": "https://github.com/statistikat/VIM",
+      "Repository": "CRAN",
+      "LinkingTo": [
+        "Rcpp"
+      ],
+      "RoxygenNote": "7.1.2",
+      "Encoding": "UTF-8",
+      "VignetteBuilder": "knitr",
+      "NeedsCompilation": "yes",
+      "Author": "Matthias Templ [aut, cre], Alexander Kowarik [aut] (<https://orcid.org/0000-0001-8598-4130>), Andreas Alfons [aut], Gregor de Cillia [aut], Bernd Prantner [ctb], Wolfgang Rannetbauer [aut]",
+      "Maintainer": "Matthias Templ <matthias.templ@gmail.com>"
     },
     "XML": {
       "Package": "XML",
@@ -1753,6 +1832,31 @@
       "Collate": "'AssertCollection.R' 'allMissing.R' 'anyInfinite.R' 'anyMissing.R' 'anyNaN.R' 'asInteger.R' 'assert.R' 'helper.R' 'makeExpectation.R' 'makeTest.R' 'makeAssertion.R' 'checkAccess.R' 'checkArray.R' 'checkAtomic.R' 'checkAtomicVector.R' 'checkCharacter.R' 'checkChoice.R' 'checkClass.R' 'checkComplex.R' 'checkCount.R' 'checkDataFrame.R' 'checkDataTable.R' 'checkDate.R' 'checkDirectoryExists.R' 'checkDisjunct.R' 'checkDouble.R' 'checkEnvironment.R' 'checkFALSE.R' 'checkFactor.R' 'checkFileExists.R' 'checkFlag.R' 'checkFormula.R' 'checkFunction.R' 'checkInt.R' 'checkInteger.R' 'checkIntegerish.R' 'checkList.R' 'checkLogical.R' 'checkMatrix.R' 'checkMultiClass.R' 'checkNamed.R' 'checkNames.R' 'checkNull.R' 'checkNumber.R' 'checkNumeric.R' 'checkOS.R' 'checkPOSIXct.R' 'checkPathForOutput.R' 'checkPermutation.R' 'checkR6.R' 'checkRaw.R' 'checkScalar.R' 'checkScalarNA.R' 'checkSetEqual.R' 'checkString.R' 'checkSubset.R' 'checkTRUE.R' 'checkTibble.R' 'checkVector.R' 'coalesce.R' 'isIntegerish.R' 'matchArg.R' 'qassert.R' 'qassertr.R' 'vname.R' 'wfwl.R' 'zzz.R'",
       "Author": "Michel Lang [cre, aut] (<https://orcid.org/0000-0001-9754-0393>), Bernd Bischl [ctb], Dénes Tóth [ctb] (<https://orcid.org/0000-0003-4262-3217>)",
       "Maintainer": "Michel Lang <michellang@gmail.com>",
+      "Repository": "CRAN"
+    },
+    "class": {
+      "Package": "class",
+      "Version": "7.3-23",
+      "Source": "Repository",
+      "Priority": "recommended",
+      "Date": "2025-01-01",
+      "Depends": [
+        "R (>= 3.0.0)",
+        "stats",
+        "utils"
+      ],
+      "Imports": [
+        "MASS"
+      ],
+      "Authors@R": "c(person(\"Brian\", \"Ripley\", role = c(\"aut\", \"cre\", \"cph\"), email = \"Brian.Ripley@R-project.org\"), person(\"William\", \"Venables\", role = \"cph\"))",
+      "Description": "Various functions for classification, including k-nearest neighbour, Learning Vector Quantization and Self-Organizing Maps.",
+      "Title": "Functions for Classification",
+      "ByteCompile": "yes",
+      "License": "GPL-2 | GPL-3",
+      "URL": "http://www.stats.ox.ac.uk/pub/MASS4/",
+      "NeedsCompilation": "yes",
+      "Author": "Brian Ripley [aut, cre, cph], William Venables [cph]",
+      "Maintainer": "Brian Ripley <Brian.Ripley@R-project.org>",
       "Repository": "CRAN"
     },
     "cli": {
@@ -2614,6 +2718,41 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [cre, aut], Maximilian Girlich [aut], Mark Fairbanks [aut], Ryan Dickerson [aut], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
+      "Repository": "CRAN"
+    },
+    "e1071": {
+      "Package": "e1071",
+      "Version": "1.7-16",
+      "Source": "Repository",
+      "Title": "Misc Functions of the Department of Statistics, Probability Theory Group (Formerly: E1071), TU Wien",
+      "Imports": [
+        "graphics",
+        "grDevices",
+        "class",
+        "stats",
+        "methods",
+        "utils",
+        "proxy"
+      ],
+      "Suggests": [
+        "cluster",
+        "mlbench",
+        "nnet",
+        "randomForest",
+        "rpart",
+        "SparseM",
+        "xtable",
+        "Matrix",
+        "MASS",
+        "slam"
+      ],
+      "Authors@R": "c(person(given = \"David\", family = \"Meyer\", role = c(\"aut\", \"cre\"), email = \"David.Meyer@R-project.org\", comment = c(ORCID = \"0000-0002-5196-3048\")),     person(given = \"Evgenia\", family = \"Dimitriadou\", role = c(\"aut\",\"cph\")), person(given = \"Kurt\", family = \"Hornik\", role = \"aut\", email = \"Kurt.Hornik@R-project.org\", comment = c(ORCID = \"0000-0003-4198-9911\")), person(given = \"Andreas\", family = \"Weingessel\", role = \"aut\"), person(given = \"Friedrich\", family = \"Leisch\", role = \"aut\"), person(given = \"Chih-Chung\", family = \"Chang\", role = c(\"ctb\",\"cph\"), comment = \"libsvm C++-code\"), person(given = \"Chih-Chen\", family = \"Lin\", role = c(\"ctb\",\"cph\"), comment = \"libsvm C++-code\"))",
+      "Description": "Functions for latent class analysis, short time Fourier transform, fuzzy clustering, support vector machines, shortest path computation, bagged clustering, naive Bayes classifier, generalized k-nearest neighbour ...",
+      "License": "GPL-2 | GPL-3",
+      "LazyLoad": "yes",
+      "NeedsCompilation": "yes",
+      "Author": "David Meyer [aut, cre] (<https://orcid.org/0000-0002-5196-3048>), Evgenia Dimitriadou [aut, cph], Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>), Andreas Weingessel [aut], Friedrich Leisch [aut], Chih-Chung Chang [ctb, cph] (libsvm C++-code), Chih-Chen Lin [ctb, cph] (libsvm C++-code)",
+      "Maintainer": "David Meyer <David.Meyer@R-project.org>",
       "Repository": "CRAN"
     },
     "evaluate": {
@@ -4332,10 +4471,34 @@
       ],
       "Repository": "CRAN"
     },
+    "laeken": {
+      "Package": "laeken",
+      "Version": "0.5.3",
+      "Source": "Repository",
+      "Type": "Package",
+      "Title": "Estimation of Indicators on Social Exclusion and Poverty",
+      "Date": "2024-01-25",
+      "Depends": [
+        "R (>= 3.2.0)"
+      ],
+      "Imports": [
+        "boot",
+        "MASS"
+      ],
+      "Description": "Estimation of indicators on social exclusion and poverty, as well as Pareto tail modeling for empirical income distributions.",
+      "License": "GPL (>= 2)",
+      "Authors@R": "c(person(\"Andreas\", \"Alfons\",  email = \"alfons@ese.eur.nl\", role = c(\"aut\", \"cre\"),  comment = c(ORCID = \"0000-0002-2513-3788\")),  person(\"Josef\", \"Holzer\", role = \"aut\"), person(\"Matthias\", \"Templ\", role = \"aut\"), person(\"Alexander\", \"Haider\", role = \"ctb\"))",
+      "Author": "Andreas Alfons [aut, cre] (<https://orcid.org/0000-0002-2513-3788>), Josef Holzer [aut], Matthias Templ [aut], Alexander Haider [ctb]",
+      "Maintainer": "Andreas Alfons <alfons@ese.eur.nl>",
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.2.3",
+      "NeedsCompilation": "no",
+      "Repository": "CRAN"
+    },
     "lars": {
       "Package": "lars",
       "Version": "1.3",
-      "Source": "Repository",
+      "Source": "GitHub",
       "Type": "Package",
       "Date": "2022-04-12",
       "Title": "Least Angle Regression, Lasso and Forward Stagewise",
@@ -4348,7 +4511,13 @@
       "License": "GPL-2",
       "URL": "https://doi.org/10.1214/009053604000000067",
       "NeedsCompilation": "yes",
-      "Repository": "CRAN"
+      "Repository": "CRAN",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "cjvanlissa",
+      "RemoteRepo": "lars",
+      "RemoteRef": "master",
+      "RemoteSha": "903f5aef1529eada24489c8e45fc88be19ac98c8"
     },
     "lattice": {
       "Package": "lattice",
@@ -4583,6 +4752,38 @@
       "NeedsCompilation": "yes",
       "Author": "Douglas Bates [aut] (<https://orcid.org/0000-0001-8316-9503>), Martin Maechler [aut] (<https://orcid.org/0000-0002-8685-9910>), Ben Bolker [aut, cre] (<https://orcid.org/0000-0002-2127-0443>), Steven Walker [aut] (<https://orcid.org/0000-0002-4394-9078>), Rune Haubo Bojesen Christensen [ctb] (<https://orcid.org/0000-0002-4494-3399>), Henrik Singmann [ctb] (<https://orcid.org/0000-0002-4842-3657>), Bin Dai [ctb], Fabian Scheipl [ctb] (<https://orcid.org/0000-0001-8172-3603>), Gabor Grothendieck [ctb], Peter Green [ctb] (<https://orcid.org/0000-0002-0238-9852>), John Fox [ctb], Alexander Bauer [ctb], Pavel N. Krivitsky [ctb, cph] (<https://orcid.org/0000-0002-9101-3362>, shared copyright on simulate.formula), Emi Tanaka [ctb] (<https://orcid.org/0000-0002-1455-259X>), Mikael Jagan [ctb] (<https://orcid.org/0000-0002-3542-2938>), Ross D. Boylan [ctb] (<https://orcid.org/0009-0003-4123-8090>)",
       "Maintainer": "Ben Bolker <bbolker+lme4@gmail.com>",
+      "Repository": "CRAN"
+    },
+    "lmtest": {
+      "Package": "lmtest",
+      "Version": "0.9-40",
+      "Source": "Repository",
+      "Title": "Testing Linear Regression Models",
+      "Date": "2022-03-21",
+      "Authors@R": "c(person(given = \"Torsten\", family = \"Hothorn\", role = \"aut\", email = \"Torsten.Hothorn@R-project.org\", comment = c(ORCID = \"0000-0001-8301-0471\")), person(given = \"Achim\", family = \"Zeileis\", role = c(\"aut\", \"cre\"), email = \"Achim.Zeileis@R-project.org\", comment = c(ORCID = \"0000-0003-0918-3766\")), person(given = c(\"Richard\", \"W.\"), family = \"Farebrother\", role = \"aut\", comment = \"pan.f\"), person(given = \"Clint\", family = \"Cummins\", role = \"aut\", comment = \"pan.f\"), person(given = \"Giovanni\", family = \"Millo\", role = \"ctb\"), person(given = \"David\", family = \"Mitchell\", role = \"ctb\"))",
+      "Description": "A collection of tests, data sets, and examples for diagnostic checking in linear regression models. Furthermore, some generic tools for inference in parametric models are provided.",
+      "LazyData": "yes",
+      "Depends": [
+        "R (>= 3.0.0)",
+        "stats",
+        "zoo"
+      ],
+      "Suggests": [
+        "car",
+        "strucchange",
+        "sandwich",
+        "dynlm",
+        "stats4",
+        "survival",
+        "AER"
+      ],
+      "Imports": [
+        "graphics"
+      ],
+      "License": "GPL-2 | GPL-3",
+      "NeedsCompilation": "yes",
+      "Author": "Torsten Hothorn [aut] (<https://orcid.org/0000-0001-8301-0471>), Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>), Richard W. Farebrother [aut] (pan.f), Clint Cummins [aut] (pan.f), Giovanni Millo [ctb], David Mitchell [ctb]",
+      "Maintainer": "Achim Zeileis <Achim.Zeileis@R-project.org>",
       "Repository": "CRAN"
     },
     "loo": {
@@ -5953,6 +6154,31 @@
       "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
       "Repository": "CRAN"
     },
+    "proxy": {
+      "Package": "proxy",
+      "Version": "0.4-27",
+      "Source": "Repository",
+      "Type": "Package",
+      "Title": "Distance and Similarity Measures",
+      "Authors@R": "c(person(given = \"David\", family = \"Meyer\", role = c(\"aut\", \"cre\"), email = \"David.Meyer@R-project.org\"), person(given = \"Christian\", family = \"Buchta\", role = \"aut\"))",
+      "Description": "Provides an extensible framework for the efficient calculation of auto- and cross-proximities, along with implementations of the most popular ones.",
+      "Depends": [
+        "R (>= 3.4.0)"
+      ],
+      "Imports": [
+        "stats",
+        "utils"
+      ],
+      "Suggests": [
+        "cba"
+      ],
+      "Collate": "registry.R database.R dist.R similarities.R dissimilarities.R util.R seal.R",
+      "License": "GPL-2",
+      "NeedsCompilation": "yes",
+      "Author": "David Meyer [aut, cre], Christian Buchta [aut]",
+      "Maintainer": "David Meyer <David.Meyer@R-project.org>",
+      "Repository": "CRAN"
+    },
     "ps": {
       "Package": "ps",
       "Version": "1.9.0",
@@ -6778,6 +7004,64 @@
       "Maintainer": "Yihui Xie <xie@yihui.name>",
       "Repository": "CRAN"
     },
+    "robustbase": {
+      "Package": "robustbase",
+      "Version": "0.99-4-1",
+      "Source": "Repository",
+      "VersionNote": "Released 0.99-4 on 2024-08-19, 0.99-3 on 2024-07-01 and 0.99-2 on 2024-01-27 to CRAN",
+      "Date": "2024-09-24",
+      "Title": "Basic Robust Statistics",
+      "Authors@R": "c(person(\"Martin\",\"Maechler\", role=c(\"aut\",\"cre\"), email=\"maechler@stat.math.ethz.ch\", comment = c(ORCID = \"0000-0002-8685-9910\")) , person(\"Peter\", \"Rousseeuw\", role=\"ctb\", comment = \"Qn and Sn\") , person(\"Christophe\", \"Croux\", role=\"ctb\", comment = \"Qn and Sn\") , person(\"Valentin\", \"Todorov\", role = \"aut\", email = \"valentin.todorov@chello.at\", comment = \"most robust Cov\") , person(\"Andreas\", \"Ruckstuhl\", role = \"aut\", email = \"andreas.ruckstuhl@zhaw.ch\", comment = \"nlrob, anova, glmrob\") , person(\"Matias\", \"Salibian-Barrera\", role = \"aut\", email = \"matias@stat.ubc.ca\", comment = \"lmrob orig.\") , person(\"Tobias\", \"Verbeke\", role = c(\"ctb\",\"fnd\"), email = \"tobias.verbeke@openanalytics.eu\", comment = \"mc, adjbox\") , person(\"Manuel\", \"Koller\", role = \"aut\", email = \"koller.manuel@gmail.com\", comment = \"mc, lmrob, psi-func.\") , person(c(\"Eduardo\", \"L. T.\"), \"Conceicao\", role = \"aut\", email = \"mail@eduardoconceicao.org\", comment = \"MM-, tau-, CM-, and MTL- nlrob\") , person(\"Maria\", \"Anna di Palma\", role = \"ctb\", comment = \"initial version of Comedian\") )",
+      "URL": "https://robustbase.R-forge.R-project.org/, https://R-forge.R-project.org/R/?group_id=59, https://R-forge.R-project.org/scm/viewvc.php/pkg/robustbase/?root=robustbase, svn://svn.r-forge.r-project.org/svnroot/robustbase/pkg/robustbase",
+      "BugReports": "https://R-forge.R-project.org/tracker/?atid=302&group_id=59",
+      "Description": "\"Essential\" Robust Statistics. Tools allowing to analyze data with robust methods.  This includes regression methodology including model selections and multivariate statistics where we strive to cover the book \"Robust Statistics, Theory and Methods\" by 'Maronna, Martin and Yohai'; Wiley 2006.",
+      "Depends": [
+        "R (>= 3.5.0)"
+      ],
+      "Imports": [
+        "stats",
+        "graphics",
+        "utils",
+        "methods",
+        "DEoptimR"
+      ],
+      "Suggests": [
+        "grid",
+        "MASS",
+        "lattice",
+        "boot",
+        "cluster",
+        "Matrix",
+        "robust",
+        "fit.models",
+        "MPV",
+        "xtable",
+        "ggplot2",
+        "GGally",
+        "RColorBrewer",
+        "reshape2",
+        "sfsmisc",
+        "catdata",
+        "doParallel",
+        "foreach",
+        "skewt"
+      ],
+      "SuggestsNote": "mostly only because of vignette graphics and simulation",
+      "Enhances": [
+        "robustX",
+        "rrcov",
+        "matrixStats",
+        "quantreg",
+        "Hmisc"
+      ],
+      "EnhancesNote": "linked to in man/*.Rd",
+      "LazyData": "yes",
+      "NeedsCompilation": "yes",
+      "License": "GPL (>= 2)",
+      "Author": "Martin Maechler [aut, cre] (<https://orcid.org/0000-0002-8685-9910>), Peter Rousseeuw [ctb] (Qn and Sn), Christophe Croux [ctb] (Qn and Sn), Valentin Todorov [aut] (most robust Cov), Andreas Ruckstuhl [aut] (nlrob, anova, glmrob), Matias Salibian-Barrera [aut] (lmrob orig.), Tobias Verbeke [ctb, fnd] (mc, adjbox), Manuel Koller [aut] (mc, lmrob, psi-func.), Eduardo L. T. Conceicao [aut] (MM-, tau-, CM-, and MTL- nlrob), Maria Anna di Palma [ctb] (initial version of Comedian)",
+      "Maintainer": "Martin Maechler <maechler@stat.math.ethz.ch>",
+      "Repository": "CRAN"
+    },
     "rpart": {
       "Package": "rpart",
       "Version": "4.1.24",
@@ -7327,6 +7611,47 @@
       "Author": "Jakob Bossek [aut, cre] (<https://orcid.org/0000-0002-4121-4668>), Pascal Kerschke [ctb] (<https://orcid.org/0000-0003-2862-1418>)",
       "Repository": "CRAN"
     },
+    "sp": {
+      "Package": "sp",
+      "Version": "2.2-0",
+      "Source": "Repository",
+      "Title": "Classes and Methods for Spatial Data",
+      "Authors@R": "c(person(\"Edzer\", \"Pebesma\", role = c(\"aut\", \"cre\"), email = \"edzer.pebesma@uni-muenster.de\"), person(\"Roger\", \"Bivand\", role = \"aut\", email = \"Roger.Bivand@nhh.no\"), person(\"Barry\", \"Rowlingson\", role = \"ctb\"), person(\"Virgilio\", \"Gomez-Rubio\", role = \"ctb\"), person(\"Robert\", \"Hijmans\", role = \"ctb\"), person(\"Michael\", \"Sumner\", role = \"ctb\"), person(\"Don\", \"MacQueen\", role = \"ctb\"), person(\"Jim\", \"Lemon\", role = \"ctb\"), person(\"Finn\", \"Lindgren\", role = \"ctb\"), person(\"Josh\", \"O'Brien\", role = \"ctb\"), person(\"Joseph\", \"O'Rourke\", role = \"ctb\"), person(\"Patrick\", \"Hausmann\", role = \"ctb\"))",
+      "Depends": [
+        "R (>= 3.5.0)",
+        "methods"
+      ],
+      "Imports": [
+        "utils",
+        "stats",
+        "graphics",
+        "grDevices",
+        "lattice",
+        "grid"
+      ],
+      "Suggests": [
+        "RColorBrewer",
+        "gstat",
+        "deldir",
+        "knitr",
+        "maps",
+        "mapview",
+        "rmarkdown",
+        "sf",
+        "terra",
+        "raster"
+      ],
+      "Description": "Classes and methods for spatial data; the classes document where the spatial location information resides, for 2D or 3D data. Utility functions are provided, e.g. for plotting data as maps, spatial selection, as well as methods for retrieving coordinates, for subsetting, print, summary, etc. From this version, 'rgdal', 'maptools', and 'rgeos' are no longer used at all, see <https://r-spatial.org/r/2023/05/15/evolution4.html> for details.",
+      "License": "GPL (>= 2)",
+      "URL": "https://github.com/edzer/sp/ https://edzer.github.io/sp/",
+      "BugReports": "https://github.com/edzer/sp/issues",
+      "Collate": "bpy.colors.R AAA.R Class-CRS.R CRS-methods.R Class-Spatial.R Spatial-methods.R projected.R Class-SpatialPoints.R SpatialPoints-methods.R Class-SpatialPointsDataFrame.R SpatialPointsDataFrame-methods.R Class-SpatialMultiPoints.R SpatialMultiPoints-methods.R Class-SpatialMultiPointsDataFrame.R SpatialMultiPointsDataFrame-methods.R Class-GridTopology.R Class-SpatialGrid.R Class-SpatialGridDataFrame.R Class-SpatialLines.R SpatialLines-methods.R Class-SpatialLinesDataFrame.R SpatialLinesDataFrame-methods.R Class-SpatialPolygons.R Class-SpatialPolygonsDataFrame.R SpatialPolygons-methods.R SpatialPolygonsDataFrame-methods.R GridTopology-methods.R SpatialGrid-methods.R SpatialGridDataFrame-methods.R SpatialPolygons-internals.R point.in.polygon.R SpatialPolygons-displayMethods.R zerodist.R image.R stack.R bubble.R mapasp.R select.spatial.R gridded.R asciigrid.R spplot.R over.R spsample.R recenter.R dms.R gridlines.R spdists.R rbind.R flipSGDF.R chfids.R loadmeuse.R compassRose.R surfaceArea.R spOptions.R subset.R disaggregate.R sp_spat1.R merge.R aggregate.R elide.R sp2Mondrian.R",
+      "VignetteBuilder": "knitr",
+      "NeedsCompilation": "yes",
+      "Author": "Edzer Pebesma [aut, cre], Roger Bivand [aut], Barry Rowlingson [ctb], Virgilio Gomez-Rubio [ctb], Robert Hijmans [ctb], Michael Sumner [ctb], Don MacQueen [ctb], Jim Lemon [ctb], Finn Lindgren [ctb], Josh O'Brien [ctb], Joseph O'Rourke [ctb], Patrick Hausmann [ctb]",
+      "Maintainer": "Edzer Pebesma <edzer.pebesma@uni-muenster.de>",
+      "Repository": "CRAN"
+    },
     "stringi": {
       "Package": "stringi",
       "Version": "1.8.7",
@@ -7642,8 +7967,8 @@
     },
     "tensorflow": {
       "Package": "tensorflow",
-      "Version": "2.16.0",
-      "Source": "Repository",
+      "Version": "2.16.0.9000",
+      "Source": "GitHub",
       "Type": "Package",
       "Title": "R Interface to 'TensorFlow'",
       "Authors@R": "c( person(\"JJ\", \"Allaire\", role = c(\"aut\", \"cph\")), person(\"Tomasz\", \"Kalinowski\", role = c(\"ctb\", \"cph\", \"cre\"), email = \"tomasz.kalinowski@posit.co\"), person(\"Daniel\", \"Falbel\", role = c(\"ctb\", \"cph\"), email = \"daniel@posit.co\"), person(\"Dirk\", \"Eddelbuettel\", role = c(\"ctb\", \"cph\"), email = \"edd@debian.org\"), person(\"Yuan\", \"Tang\", role = c(\"aut\", \"cph\"), email = \"terrytangyuan@gmail.com\", comment = c(ORCID = \"0000-0001-5243-233X\")), person(\"Nick\", \"Golding\", role = c(\"ctb\", \"cph\"), email = \"nick.golding.research@gmail.com\"), person(\"Google Inc.\", role = c(\"ctb\", \"cph\"), comment = \"Examples and Tutorials\"), person(\"Posit, PBC\", role = c(\"cph\", \"fnd\")) )",
@@ -7659,7 +7984,7 @@
       "Imports": [
         "config",
         "processx",
-        "reticulate (>= 1.32)",
+        "reticulate (>= 1.41.0)",
         "tfruns (>= 1.0)",
         "utils",
         "yaml",
@@ -7668,6 +7993,7 @@
         "rstudioapi (>= 0.7)",
         "lifecycle"
       ],
+      "Roxygen": "list(markdown = TRUE)",
       "Suggests": [
         "testthat (>= 2.1.0)",
         "keras3",
@@ -7675,11 +8001,15 @@
         "withr",
         "callr"
       ],
-      "RoxygenNote": "7.3.1",
-      "NeedsCompilation": "no",
+      "RoxygenNote": "7.3.2",
       "Author": "JJ Allaire [aut, cph], Tomasz Kalinowski [ctb, cph, cre], Daniel Falbel [ctb, cph], Dirk Eddelbuettel [ctb, cph], Yuan Tang [aut, cph] (<https://orcid.org/0000-0001-5243-233X>), Nick Golding [ctb, cph], Google Inc. [ctb, cph] (Examples and Tutorials), Posit, PBC [cph, fnd]",
       "Maintainer": "Tomasz Kalinowski <tomasz.kalinowski@posit.co>",
-      "Repository": "CRAN"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "rstudio",
+      "RemoteRepo": "tensorflow",
+      "RemoteRef": "main",
+      "RemoteSha": "e48867f4403f1fd08e05680e1b2e9c718a178ce5"
     },
     "texreg": {
       "Package": "texreg",
@@ -8420,6 +8750,40 @@
       "URL": "https://www.rforge.net/uuid",
       "BugReports": "https://github.com/s-u/uuid/issues",
       "NeedsCompilation": "yes",
+      "Repository": "CRAN"
+    },
+    "vcd": {
+      "Package": "vcd",
+      "Version": "1.4-13",
+      "Source": "Repository",
+      "Title": "Visualizing Categorical Data",
+      "Authors@R": "c(person(given = \"David\", family = \"Meyer\", role = c(\"aut\", \"cre\"), email = \"David.Meyer@R-project.org\", comment = c(ORCID = \"0000-0002-5196-3048\")),\t     person(given = \"Achim\", family = \"Zeileis\", role = \"aut\", email = \"Achim.Zeileis@R-project.org\", comment = c(ORCID = \"0000-0003-0918-3766\")), person(given = \"Kurt\", family = \"Hornik\", role = \"aut\", email = \"Kurt.Hornik@R-project.org\", comment = c(ORCID = \"0000-0003-4198-9911\")), person(given = \"Florian\", family = \"Gerber\", role = \"ctb\"), person(given = \"Michael\", family = \"Friendly\", role = \"aut\", email = \"friendly@yorku.ca\", comment = c(ORCID = \"0000-0002-3237-0941\")))",
+      "Description": "Visualization techniques, data sets, summary and inference procedures aimed particularly at categorical data. Special emphasis is given to highly extensible grid graphics. The package was package was originally inspired by the book  \"Visualizing Categorical Data\" by Michael Friendly and is  now the main support package for a new book,  \"Discrete Data Analysis with R\" by Michael Friendly and  David Meyer (2015).",
+      "LazyLoad": "yes",
+      "LazyData": "yes",
+      "Depends": [
+        "R (>= 2.4.0)",
+        "grid"
+      ],
+      "Suggests": [
+        "KernSmooth",
+        "mvtnorm",
+        "kernlab",
+        "HSAUR3",
+        "coin"
+      ],
+      "Imports": [
+        "stats",
+        "utils",
+        "MASS",
+        "grDevices",
+        "colorspace",
+        "lmtest"
+      ],
+      "License": "GPL-2",
+      "NeedsCompilation": "no",
+      "Author": "David Meyer [aut, cre] (<https://orcid.org/0000-0002-5196-3048>), Achim Zeileis [aut] (<https://orcid.org/0000-0003-0918-3766>), Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>), Florian Gerber [ctb], Michael Friendly [aut] (<https://orcid.org/0000-0002-3237-0941>)",
+      "Maintainer": "David Meyer <David.Meyer@R-project.org>",
       "Repository": "CRAN"
     },
     "vctrs": {

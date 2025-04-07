@@ -6,6 +6,7 @@
 library(worcs)
 library(rio)
 library(dplyr)
+library(tidyr)
 
 # Prepare data --------------------------------------------------------------------------------
 
@@ -31,8 +32,8 @@ data2 <- filter(data2, pledge == 1)
 # Show % of participants who ignored instructions to not complete the study on a phone and exclude
 nrow(filter(data1, device == 4))/nrow(data1)*100 # Part 1
 nrow(filter(data2, device == 4))/nrow(data2)*100 # Part 2
-#data1 <- filter(data1, device != 4)
-#data2 <- filter(data2, device != 4)
+#data1 <- filter(data1, device != 4) # Activate this code for the real data
+#data2 <- filter(data2, device != 4) # Activate this code for the real data
 
 # Select relevant variables
 data1 <- select(data1, prolificid:comment, -gender_9_TEXT)
@@ -46,14 +47,14 @@ data2 <- rename(data2,
                 comment2 = comment)
 
 # Merge responses from the two parts
-#data <- left_join(select(data2, experience_1_1:comment2, -pledge,
-#                  select(data1, prolificid:comment1, -pledge),
-#                         by = "prolificid") # Code for real data
-data2 <- data2 [1:nrow(data1),] # Code for simulated data
+#data <- inner_join(select(data1, -pledge),
+#                   select(data2, -pledge),
+#                   by = "prolificid") # Activate this code for the real data
+data1 <- data1[1:nrow(data2),] # Code for simulated data
 data <- cbind(select(data2, sentience_1_1:comment2, -pledge, -gender2, -age2),
-              select(data1, prolificid:comment, -pledge))
+              select(data1, prolificid:comment, -pledge)) # Code for simulated data
 
-# only keep merged data set
+# Only keep merged data set
 rm("data1", "data2")
 
 # Create participant ID variable
@@ -72,14 +73,14 @@ data$diet <- factor(data$diet, levels = 1:5, labels = c("omnivore",
                                                         "other"))
 
 # Recode ethnicity self-identification variable to dummy variables for each answer option
-data$ethnic_white <- ifelse(grepl("1", data$ethnicity), 1,0)
-data$ethnic_black <- ifelse(grepl("2", data$ethnicity), 1,0)
-data$ethnic_native <- ifelse(grepl("3", data$ethnicity), 1,0)
-data$ethnic_asian <- ifelse(grepl("4", data$ethnicity), 1,0)
-data$ethnic_pacific <- ifelse(grepl("5", data$ethnicity), 1,0)
-data$ethnic_hispanic <- ifelse(grepl("6", data$ethnicity), 1,0)
-data$ethnic_other <- ifelse(grepl("7", data$ethnicity), 1,0)
-data$ethnic_blank <- ifelse(grepl("8", data$ethnicity), 1,0)
+data$ethnic_white <- ifelse(grepl("1", data$ethnicity), 1, 0)
+data$ethnic_black <- ifelse(grepl("2", data$ethnicity), 1, 0)
+data$ethnic_native <- ifelse(grepl("3", data$ethnicity), 1, 0)
+data$ethnic_asian <- ifelse(grepl("4", data$ethnicity), 1, 0)
+data$ethnic_pacific <- ifelse(grepl("5", data$ethnicity), 1, 0)
+data$ethnic_hispanic <- ifelse(grepl("6", data$ethnicity), 1, 0)
+data$ethnic_other <- ifelse(grepl("7", data$ethnicity), 1, 0)
+data$ethnic_blank <- ifelse(grepl("8", data$ethnicity), 1, 0)
 
 # Recode "I'd rather not say" answers to NA
 data$education <- ifelse(data$education == 6, NA, data$education)
@@ -90,33 +91,33 @@ data$pet_childhood <- ifelse(data$pet == 0 & is.na(data$pet_attachment), 0, data
 
 # Prepare judge characteristics
 # Reverse-score Social Dominance Orientation items and create average score
-data$sdo_3 <- (data$sdo_3 - 8) * -1
-data$sdo_4 <- (data$sdo_4 - 8) * -1
-data$sdo_7 <- (data$sdo_7 - 8) * -1
-data$sdo_8 <- (data$sdo_8 - 8) * -1
+data$sdo_3 <- 8 - data$sdo_3
+data$sdo_4 <- 8 - data$sdo_4
+data$sdo_7 <- 8 - data$sdo_7
+data$sdo_8 <- 8 - data$sdo_8
 
 data$sdo <- rowMeans(select(data, sdo_1:sdo_8))
 
 # Reverse-score Right-Wing Authoritarianism items and create average score
-data$rwa_1 <- (data$rwa_1 - 8) * -1
-data$rwa_4 <- (data$rwa_4 - 8) * -1
-data$rwa_5 <- (data$rwa_5 - 8) * -1
+data$rwa_1 <- 8 - data$rwa_1
+data$rwa_4 <- 8 - data$rwa_4
+data$rwa_5 <- 8 - data$rwa_5
 
 data$rwa <- rowMeans(select(data, rwa_1:rwa_6))
 
 # Reverse-score HEXACO items and create average scores per dimension
-data$hexaco_12 <- (data$hexaco_12 - 8) * -1
-data$hexaco_18 <- (data$hexaco_18 - 8) * -1
-data$hexaco_24 <- (data$hexaco_24 - 8) * -1
-data$hexaco_11 <- (data$hexaco_11 - 8) * -1
-data$hexaco_17 <- (data$hexaco_17 - 8) * -1
-data$hexaco_4 <- (data$hexaco_4 - 8) * -1
-data$hexaco_22 <- (data$hexaco_22 - 8) * -1
-data$hexaco_3 <- (data$hexaco_3 - 8) * -1
-data$hexaco_9 <- (data$hexaco_9 - 8) * -1
-data$hexaco_8 <- (data$hexaco_8 - 8) * -1
-data$hexaco_20 <- (data$hexaco_20 - 8) * -1
-data$hexaco_7 <- (data$hexaco_7 - 8) * -1
+data$hexaco_12 <- 8 - data$hexaco_12
+data$hexaco_18 <- 8 - data$hexaco_18
+data$hexaco_24 <- 8 - data$hexaco_24
+data$hexaco_11 <- 8 - data$hexaco_11
+data$hexaco_17 <- 8 - data$hexaco_17
+data$hexaco_4 <- 8 - data$hexaco_4
+data$hexaco_22 <- 8 - data$hexaco_22
+data$hexaco_3 <- 8 - data$hexaco_3
+data$hexaco_9 <- 8 - data$hexaco_9
+data$hexaco_8 <- 8 - data$hexaco_8
+data$hexaco_20 <- 8 - data$hexaco_20
+data$hexaco_7 <- 8 - data$hexaco_7
 
 data$hexaco_hh <- rowMeans(select(data, hexaco_6, hexaco_12, hexaco_18, hexaco_24)) # Honesty-Humility
 data$hexaco_emo <- rowMeans(select(data, hexaco_5, hexaco_11, hexaco_17, hexaco_23)) # Emotionality
@@ -130,14 +131,14 @@ data <- rename(data,
                trust = trust_1)
 
 # Reverse-score Actively Open-Minded Thinking items and create average score
-data$aot_2 <- (data$aot_2 - 8) * -1
-data$aot_4 <- (data$aot_4 - 8) * -1
-data$aot_5 <- (data$aot_5 - 8) * -1
-data$aot_6 <- (data$aot_6 - 8) * -1
-data$aot_7 <- (data$aot_7 - 8) * -1
-data$aot_8 <- (data$aot_8 - 8) * -1
-data$aot_10 <- (data$aot_10 - 8) * -1
-data$aot_13 <- (data$aot_13 - 8) * -1
+data$aot_2 <- 8 - data$aot_2
+data$aot_4 <- 8 - data$aot_4
+data$aot_5 <- 8 - data$aot_5
+data$aot_6 <- 8 - data$aot_6
+data$aot_7 <- 8 - data$aot_7
+data$aot_8 <- 8 - data$aot_8
+data$aot_10 <- 8 - data$aot_10
+data$aot_13 <- 8 - data$aot_13
 
 data$aot <- rowMeans(select(data, aot_1:aot_13))
 
@@ -145,13 +146,13 @@ data$aot <- rowMeans(select(data, aot_1:aot_13))
 data$moraldisgust <- rowMeans(select(data, moraldisgust_1:moraldisgust_7))
 
 # Reverse-score Empathy items and create average scores per dimension
-data$empathy_2 <- (data$empathy_2 - 8) * -1
-data$empathy_5 <- (data$empathy_5 - 8) * -1
-data$empathy_9 <- (data$empathy_9 - 8) * -1
-data$empathy_12 <- (data$empathy_12 - 8) * -1
-data$empathy_13 <- (data$empathy_13 - 8) * -1
-data$empathy_18 <- (data$empathy_18 - 8) * -1
-data$empathy_20 <- (data$empathy_20 - 8) * -1
+data$empathy_2 <- 8 - data$empathy_2
+data$empathy_5 <- 8 - data$empathy_5
+data$empathy_9 <- 8 - data$empathy_9
+data$empathy_12 <- 8 - data$empathy_12
+data$empathy_13 <- 8 - data$empathy_13
+data$empathy_18 <- 8 - data$empathy_18
+data$empathy_20 <- 8 - data$empathy_20
 
 data$empathy_pt <- rowMeans(select(data, empathy_1:empathy_7)) # Perspective-taking
 data$empathy_ec <- rowMeans(select(data, empathy_8:empathy_14)) # Empathic concern
@@ -270,8 +271,20 @@ data <- arrange(data, by = id)
 rm("temp")
 
 # Rename entities
-data$entity <- factor(data$entity, levels = c("concern_1_1","concern_1_2","concern_1_3","concern_1_4","concern_1_5","concern_1_6","concern_1_7","concern_1_8","concern_1_9","concern_1_10","concern_1_11","concern_1_12","concern_1_13","concern_1_14","concern_1_15","concern_1_16","concern_1_17","concern_1_18","concern_1_19","concern_1_20","concern_1_21","concern_1_22","concern_1_23","concern_1_24","concern_1_25","concern_1_26","concern_1_27","concern_1_28","concern_1_29","concern_1_30"),
-                      labels = c("family member","transgender person","charity worker","American citizen","Chinese citize","asylum seeker","member of opposing political party","dolphin","old-growth forest","fish","apple tree","murderer","human in a persistent vegetative state","1-year-old human infant","6-week-old human embryo","24-week-old human fetus","octopus","dog","pig","chicken","shrimp","rat","pigeon","spider","chimpanzee","wolf","deer","earthworm","butterfly","ChatGPT (advanced AI system)"))
+data$entity <- factor(data$entity, levels = c("concern_1_1","concern_1_2","concern_1_3","concern_1_4","concern_1_5",
+                                              "concern_1_6","concern_1_7","concern_1_8","concern_1_9","concern_1_10",
+                                              "concern_1_11","concern_1_12","concern_1_13","concern_1_14",
+                                              "concern_1_15","concern_1_16","concern_1_17","concern_1_18",
+                                              "concern_1_19","concern_1_20","concern_1_21","concern_1_22",
+                                              "concern_1_23","concern_1_24","concern_1_25","concern_1_26",
+                                              "concern_1_27","concern_1_28","concern_1_29","concern_1_30"),
+                      labels = c("family member","transgender person","charity worker","American citizen",
+                                 "Chinese citize","asylum seeker","member of opposing political party","dolphin",
+                                 "old-growth forest","fish","apple tree","murderer",
+                                 "human in a persistent vegetative state","1-year-old human infant",
+                                 "6-week-old human embryo","24-week-old human fetus","octopus","dog","pig","chicken",
+                                 "shrimp","rat","pigeon","spider","chimpanzee","wolf","deer","earthworm","butterfly",
+                                 "ChatGPT (advanced AI system)"))
 
 # Create average scores for moral concern, perceived sentience, agency, social-cognitive capacities and harmfulness
 data$moral_concern <- rowMeans(select(data, moral_concern_1:moral_concern_3))
@@ -370,8 +383,8 @@ psychmet <- lapply(names(scales_list), function(scal){
   #scal = names(scales_list)[1]
   indicators <- scales_list[[scal]]
   syntx <- paste0(scal, "=~", paste0(indicators,
-      collapse = " + "
-    ))
+                                     collapse = " + "
+  ))
   if(length(indicators) == 2){
     syntx <- paste0(scal, "=~", paste0(paste0("a*", indicators),
                                        collapse = " + "
@@ -383,12 +396,12 @@ psychmet <- lapply(names(scales_list), function(scal){
   is_ordr <- sapply(df_tmp, inherits, what = "ordered")
   # CFA
   res <- lavaan::cfa(
-      model = syntx,
-      data = df_tmp,
-      ordered = if(any(is_ordr)){names(df_tmp)[is_ordr]} else {NULL},
-      std.lv = TRUE,
-      auto.fix.first = FALSE
-    )
+    model = syntx,
+    data = df_tmp,
+    ordered = if(any(is_ordr)){names(df_tmp)[is_ordr]} else {NULL},
+    std.lv = TRUE,
+    auto.fix.first = FALSE
+  )
 
   fits <- try(tidySEM::table_fit(res)[, c("Parameters", "chisq", "df", "cfi", "tli", "rmsea", "srmr")], silent = TRUE)
   if(inherits(fits, "try-error")){
@@ -402,7 +415,7 @@ psychmet <- lapply(names(scales_list), function(scal){
                     fits)
 
   tab$comp_rel <- semTools::compRelSEM(res, ord.scale = any(is_ordr))
-  scores <- rowMeans(df_tmp[, lapply(.SD, as.numeric), .SDcols = indicators])
+  scores <- rowMeans(df_tmp[, lapply(.SD, function(x){as.numeric(as.character(x))}), .SDcols = indicators])
   return(
     list(
       psychometrics = tab,
@@ -417,23 +430,18 @@ names(scale_scores) <- tab_psychometrics$variable
 write.csv(tab_psychometrics, "tab_psychometrics.csv", row.names = F)
 
 if(!all(sapply(names(scale_scores), function(n) isTRUE(all(scale_scores[[n]] == df_full[[n]]))))){
-  message("Bastian's scales are not the same as Caspar's")
+  stop("Bastian's scales are not the same as Caspar's")
 }
 
 # Drop scales if the following psychometrics are poor:
-#drop_scales <- which(tab_psychometrics$comp_rel < .6)
+drop_scales <- which(tab_psychometrics$comp_rel < 0) # change to .6 for real data
 
+if(length(drop_scales) > 0){
+  tab_psychometrics <- tab_psychometrics[-drop_scales, ]
+  scale_scores <- scale_scores[, -drop_scales]
+}
 
-tab_psychometrics[drop_scales, ]
-tab_psychometrics <- tab_psychometrics[!drop_scales, ]
-
-scale_scores <- scale_scores[, !drop_scales]
-
-keep_these_variables <- setdiff(selected_variables$variable_name, names(scales_list))
-keep_these_variables <- keep_these_variables[which(keep_these_variables %in% names(scale_scores))]
-keep_these_variables <- c("id", yvar, keep_these_variables)
-
-df_anal <- data.frame(df_full[, keep_these_variables, drop = FALSE],
+df_anal <- data.frame(df_full[, c("id", yvar, setdiff(selected_variables$variable_name, names(scales_list)))],
                       scale_scores)
 
 open_data(df_anal)

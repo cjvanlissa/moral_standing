@@ -18,6 +18,13 @@ predict.res_tree <- function(object, newdata){
 predict.tuneRanger <- function(object, newdata){
   mlr:::predict.WrappedModel(object$model, newdata = newdata)$data$response
 }
+
+rsq_numeric <- function(obs, preds, mn){
+  tss <- sum((obs-mn)^2)
+  rss <- sum((preds - obs) ^ 2)
+  return(1 - rss/tss)
+}
+
 rsq <- function(model, newdata, tss){
   preds <- predict(model, newdata)
   rss <- sum((preds - newdata$moral_concern) ^ 2)

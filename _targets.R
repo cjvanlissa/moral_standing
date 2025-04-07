@@ -14,6 +14,15 @@ library(glmnet)
 library(tuneRanger)
 library(mlr)
 library(doParallel)
+library(tensorflow)
+library(keras)
+
+if(FALSE){
+  tf$constant("Hello TensorFlow!")
+  reticulate::install_python()
+  library(tensorflow)
+  tensorflow::install_tensorflow(envname = "r-tensorflow")
+}
 
 
 
@@ -28,8 +37,12 @@ list(
     command = get_data()
     )
   , tar_target(
-    name = dat,
+    name = df_withmiss,
     command = split_train_test(df, k = 10)
+  )
+  , tar_target(
+    name = dat,
+    command = impute_missings(df_withmiss)
   )
   , tar_target(
     name = features,
@@ -43,14 +56,14 @@ list(
     name = res_lasso,
     command = lapply(dat_features, do_lasso)
   )
-  # , tar_target(
-  #   name = res_ranger,
-  #   command = lapply(dat_features, do_ranger)
-  # )
-  # , tar_target(
-  #   name = res_tree,
-  #   command = lapply(dat_features, do_tree)
-  # )
+  , tar_target(
+    name = res_ranger,
+    command = lapply(dat_features, do_ranger)
+  )
+  , tar_target(
+    name = res_tree,
+    command = lapply(dat_features, do_tree)
+  )
   # , tar_target(
   #   name = res_nn,
   #   command = do_nn(dat_features)

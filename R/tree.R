@@ -37,8 +37,8 @@ do_tree <- function(dat){
     res_cv = res_tune,
     res = tree_model,
     tune_pars = as.vector(tune_grid[which.min(res_tune), , drop = FALSE]),
-    rsq = rsq(dat$test$moral_concern, pred, mean(dat$train$moral_concern))
-    , rsq_train = rsq(dat$train$moral_concern, pred_train, mean(dat$train$moral_concern))
+    rsq = rsq_numeric(dat$test$moral_concern, pred, mean(dat$train$moral_concern))
+    , rsq_train = rsq_numeric(dat$train$moral_concern, pred_train, mean(dat$train$moral_concern))
   )
   class(out) <- "res_tree"
   return(out)

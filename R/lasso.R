@@ -4,30 +4,30 @@ do_lasso <- function(dat){
   Y <- as.numeric(dat$train$moral_concern)
   #all.folds <- lars:::cv.folds(length(dat$train$moral_concern), 10)
   all.folds <- dat$folds
+  fold_id <- unlist(lapply(seq_along(all.folds), function(id){
+    out <- rep(id, length(all.folds[[id]]))
+    names(out) <- all.folds[[id]]
+    out
+  }))
+  fold_id <- fold_id[order(as.integer(names(fold_id)))]
+  #an optional vector of values between 1 and nfolds identifying what fold each observation is in. If supplied, nfolds can be missing.
 
-  res_lasso <- cv.lars(x = X,
-                       y = Y,
-                       K = all.folds, type = "lasso")
+  res_cv <- glmnet::cv.glmnet(X, Y, foldid = fold_id)
+  res_lasso <- glmnet::glmnet(X, Y, lambda = res_cv$lambda.1se)
 
-
-  idx <- which(res_lasso$cv - res_lasso$cv.error <= min(res_lasso$cv))[1]
-
-  res_lars <- lars::lars(X, Y, type = "lasso")
-  pred <- lars:::predict.lars(res_lars,
-                              newx = model.matrix(moral_concern ~., dat$test)[, -1],
-                              s = res_lasso$cv[idx],
-                              mode = "fraction")
-  pred_train <- lars:::predict.lars(res_lars,
-                              newx = model.matrix(moral_concern ~., dat$train)[, -1],
-                              s = res_lasso$cv[idx],
-                              mode = "fraction")
+  pred <- predict(res_cv,
+                  newx = model.matrix(moral_concern ~., dat$test)[, -1],
+                  s = "lambda.1se")
+  pred_train <- predict(res_cv,
+                        newx = model.matrix(moral_concern ~., dat$train)[, -1],
+                        s = "lambda.1se")
 
   out <- list(
-    res_cv = res_lasso,
-    res = res_lars,
-    tune_pars = c("lambda1sd" = res_lasso$cv[idx]),
-    rsq = rsq(dat$test$moral_concern, pred$fit, mean(dat$train$moral_concern))
-    , rsq_train = rsq(dat$train$moral_concern, pred_train$fit, mean(dat$train$moral_concern))
+    res_cv = res_cv,
+    res = res_lasso,
+    tune_pars = c("lambda1sd" = res_cv$lambda.1se),
+    rsq = rsq_numeric(dat$test$moral_concern, as.numeric(pred), mean(dat$train$moral_concern))
+    , rsq_train = rsq_numeric(dat$train$moral_concern, as.numeric(pred_train), mean(dat$train$moral_concern))
   )
   class(out) <- "res_lasso"
   return(out)
