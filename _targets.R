@@ -17,11 +17,14 @@ library(doParallel)
 library(tensorflow)
 library(keras)
 
-if(FALSE){
-  tf$constant("Hello TensorFlow!")
+tmp <- try(tf$constant("Hello TensorFlow!"))
+if(!inherits(tmp, "tensorflow.tensor")){
   reticulate::install_python()
-  library(tensorflow)
   tensorflow::install_tensorflow(envname = "r-tensorflow")
+  tmp <- try(tf$constant("Hello TensorFlow!"))
+  if(!inherits(tmp, "tensorflow.tensor")){
+    stop("Tensorflow not installed.")
+  }
 }
 
 
@@ -64,17 +67,17 @@ list(
     name = res_tree,
     command = lapply(dat_features, do_tree)
   )
-  # , tar_target(
-  #   name = res_nn,
-  #   command = do_nn(dat_features)
-  # )
-  # , tar_target(
-  #   name = analysis_results,
-  #   command = eval_results(dat, models = list(lasso = res_lasso, ranger = res_ranger, tree = res_tree))
-  # )
-  # , tarchetypes::tar_render(manuscript, "manuscript.rmd", cue = tar_cue("always"))
-  # , tar_file (
-  #   name = create_index,
-  #   command = { file.copy("manuscript.html", "index.html"); return("index.html")}
-  #   )
+  , tar_target(
+    name = res_nn,
+    command = do_nn(dat_features)
+  )
+  , tar_target(
+    name = analysis_results,
+    command = eval_results(dat, models = list(lasso = res_lasso, ranger = res_ranger, tree = res_tree, nn = res_nn))
+  )
+  , tarchetypes::tar_render(manuscript, "manuscript.rmd", cue = tar_cue("always"))
+  , tar_file (
+    name = create_index,
+    command = { file.rename("manuscript.html", "index.html"); return("index.html")}
+    )
 )

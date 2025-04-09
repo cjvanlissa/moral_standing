@@ -1,11 +1,10 @@
 do_nn <- function(dat_features){
-
+  library(tensorflow)
+  library(keras)
+  reticulate::use_virtualenv("r-tensorflow")
   out_return <- vector("list", length(dat_features))
   names(out_return) <- names(dat_features)
   for(data_name in names(dat_features)){
-    library(tensorflow)
-    library(keras)
-    reticulate::use_virtualenv("C:/Users/TSB-MTO/Documents/.virtualenvs/r-tensorflow")
     dat <- dat_features[[data_name]]
     # Prep data
     train_dataset <- dat$train

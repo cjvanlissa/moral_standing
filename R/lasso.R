@@ -2,7 +2,6 @@
 do_lasso <- function(dat){
   X <- model.matrix(moral_concern ~., dat$train)[, -1]
   Y <- as.numeric(dat$train$moral_concern)
-  #all.folds <- lars:::cv.folds(length(dat$train$moral_concern), 10)
   all.folds <- dat$folds
   fold_id <- unlist(lapply(seq_along(all.folds), function(id){
     out <- rep(id, length(all.folds[[id]]))

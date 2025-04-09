@@ -602,7 +602,7 @@ padding-top: 0px;
 <body>
 
 <h1 id="untitled">Untitled</h1>
-<p>05 September, 2024</p>
+<p>09 April, 2025</p>
 <p>This manuscript uses the Workflow for Open Reproducible Code in
 Science (Van Lissa et al. 2021) to ensure reproducibility and
 transparency. All code <!--and data--> are available at <a href="https://github.com/cjvanlissa/moral_standing.git">https://github.com/cjvanlissa/moral_standing.git</a>.</p>
@@ -612,47 +612,147 @@ transparency. All code <!--and data--> are available at <a href="https://github.
 <!--The function below inserts a notification if the manuscript is knit using synthetic data. Make sure to insert it after load_data().-->
 
 <h2 id="results">Results</h2>
+<p>These are the Rsquared values on training and test data (use test
+data to determine unbiased performance estimates):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>temp_env <span class="ot">&lt;-</span> <span class="fu">new.env</span>()</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">tar_load_everything</span>(<span class="at">envir =</span> temp_env)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;res_&quot;</span>, <span class="fu">ls</span>(<span class="at">envir =</span> temp_env), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>tab_res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Model =</span> res)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">lapply</span>(res, get, <span class="at">envir =</span> temp_env)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>tab_res<span class="sc">$</span>R2_test <span class="ot">&lt;-</span> <span class="fu">sapply</span>(res, <span class="st">`</span><span class="at">[[</span><span class="st">`</span>, <span class="st">&quot;rsq&quot;</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>tab_res<span class="sc">$</span>R2_train <span class="ot">&lt;-</span> <span class="fu">sapply</span>(res, <span class="st">`</span><span class="at">[[</span><span class="st">`</span>, <span class="st">&quot;rsq_train&quot;</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tab_res, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>tab_res <span class="ot">&lt;-</span> temp_env<span class="sc">$</span>analysis_results<span class="sc">$</span>rsqs</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">rownames</span>(tab_res) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tab_res, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
-<th align="left">Model</th>
-<th align="right">R2_test</th>
-<th align="right">R2_train</th>
+<th align="right">rsq_test</th>
+<th align="right">rsq_train</th>
+<th align="left">model</th>
+<th align="left">features</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">res_lasso</td>
-<td align="right">0.31</td>
-<td align="right">0.33</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">lasso</td>
+<td align="left">all</td>
 </tr>
 <tr class="even">
-<td align="left">res_nn</td>
-<td align="right">0.14</td>
-<td align="right">0.60</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">lasso</td>
+<td align="left">target</td>
 </tr>
 <tr class="odd">
-<td align="left">res_ranger</td>
-<td align="right">0.29</td>
-<td align="right">0.94</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">lasso</td>
+<td align="left">judge</td>
 </tr>
 <tr class="even">
-<td align="left">res_sr</td>
-<td align="right">0.20</td>
-<td align="right">0.17</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">lasso</td>
+<td align="left">demographic</td>
 </tr>
 <tr class="odd">
-<td align="left">res_tree</td>
-<td align="right">0.33</td>
-<td align="right">0.37</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">ranger</td>
+<td align="left">all</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">ranger</td>
+<td align="left">target</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">ranger</td>
+<td align="left">judge</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">ranger</td>
+<td align="left">demographic</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">tree</td>
+<td align="left">all</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">tree</td>
+<td align="left">target</td>
+</tr>
+<tr class="odd">
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">tree</td>
+<td align="left">judge</td>
+</tr>
+<tr class="even">
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="left">tree</td>
+<td align="left">demographic</td>
+</tr>
+<tr class="odd">
+<td align="right">-0.18</td>
+<td align="right">-0.18</td>
+<td align="left">nn</td>
+<td align="left">all</td>
+</tr>
+<tr class="even">
+<td align="right">-0.01</td>
+<td align="right">-0.01</td>
+<td align="left">nn</td>
+<td align="left">target</td>
+</tr>
+<tr class="odd">
+<td align="right">0.01</td>
+<td align="right">0.01</td>
+<td align="left">nn</td>
+<td align="left">judge</td>
+</tr>
+<tr class="even">
+<td align="right">-0.07</td>
+<td align="right">-0.07</td>
+<td align="left">nn</td>
+<td align="left">demographic</td>
+</tr>
+</tbody>
+</table>
+<p>The best performing model (or interpretable model within 5% of the
+best overall model) is nn.judge.</p>
+<h3 id="effect-of-features-and-model">Effect of Features and Model</h3>
+<p>The variance in model performance can be broken down into components
+due to model and feature set:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>tab_aov <span class="ot">&lt;-</span> temp_env<span class="sc">$</span>analysis_results<span class="sc">$</span>etasqs</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tab_aov, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">etasq</th>
+<th align="right">partial</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">model</td>
+<td align="right">0.38</td>
+<td align="right">0.45</td>
+</tr>
+<tr class="even">
+<td align="left">features</td>
+<td align="right">0.16</td>
+<td align="right">0.25</td>
 </tr>
 </tbody>
 </table>

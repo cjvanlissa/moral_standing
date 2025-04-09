@@ -1,12 +1,3 @@
-predict.res_lasso <- function(object, newdata){
-  X <- model.matrix(moral_concern ~., newdata)[, -1]
-  X <- X[, colnames(object$res$beta), drop = FALSE]
-  lars::predict.lars(object$res,
-                     s = object$tune_pars["lambda1sd"],
-                     type = "fit",
-                     newx = X,
-                     mode = "fraction")$fit
-}
 predict.res_ranger <- function(object, newdata){
   predictions(ranger:::predict.ranger(object$res,
                           data = newdata,
@@ -36,7 +27,6 @@ etasq <- function(model){
   sss <- unclass(tmp[[1]])$`Sum Sq`
   etasqs <- (sss/sum(sss))[-length(sss)]
   partial <- (sss[-length(sss)]/(sss[-length(sss)]+sss[length(sss)]))
-  names(out) <- attr(model$terms,"term.labels")
   data.frame(term = attr(model$terms,"term.labels"),
             etasq = etasqs,
             partial = partial)
@@ -73,20 +63,13 @@ eval_results <- function(dat, models){
   models <- do.call(c, models)
 
   # Evaluate performance ----------------------------------------------------
-  mean_y_train <-  mean(dat$train$moral_concern)
 
-  # On training data
-  tss <- sum((dat$train$moral_concern - mean_y_train) ^ 2)
-  rsqs <- sapply(models, rsq, newdata = dat$train, tss = tss)
-  # rsq_lasso <- rsq(res_lasso, dat$train, tss)
-  # rsq_ranger <- rsq(res_ranger, dat$train, tss)
-
+  rsqs_train <- sapply(models, `[[`, "rsq_train")
   # On test data
-  tss <- sum((dat$test$moral_concern - mean_y_train) ^ 2)
-  rsqs_test <- sapply(models, rsq, newdata = dat$test, tss = tss)
+  rsqs_test <- rsqs_train <- sapply(models, `[[`, "rsq")
 
   df_rsq <- data.frame(rsq_test = rsqs_test,
-                       rsq_train = rsqs,
+                       rsq_train = rsqs_train,
                        do.call(rbind, strsplit(names(rsqs_test), ".", fixed = TRUE)))
   names(df_rsq)[3:4] <- c("model", "features")
   mod_rsq <- aov(rsq_test ~ model + features, data = df_rsq)
