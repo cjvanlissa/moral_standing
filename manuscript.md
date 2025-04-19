@@ -1,6 +1,6 @@
-Untitled
+Towards a Predictive Model of Moral Concern
 ================
-09 April, 2025
+19 April, 2025
 
 This manuscript uses the Workflow for Open Reproducible Code in Science
 (Van Lissa et al. 2021) to ensure reproducibility and transparency. All
@@ -27,27 +27,27 @@ rownames(tab_res) <- NULL
 knitr::kable(tab_res, digits = 2)
 ```
 
-| rsq_test | rsq_train | model  | features    |
-|---------:|----------:|:-------|:------------|
-|     0.00 |      0.00 | lasso  | all         |
-|     0.00 |      0.00 | lasso  | target      |
-|     0.00 |      0.00 | lasso  | judge       |
-|     0.00 |      0.00 | lasso  | demographic |
-|     0.00 |      0.00 | ranger | all         |
-|     0.00 |      0.00 | ranger | target      |
-|     0.00 |      0.00 | ranger | judge       |
-|     0.00 |      0.00 | ranger | demographic |
-|     0.00 |      0.00 | tree   | all         |
-|     0.00 |      0.00 | tree   | target      |
-|     0.00 |      0.00 | tree   | judge       |
-|     0.00 |      0.00 | tree   | demographic |
-|    -0.18 |     -0.18 | nn     | all         |
-|    -0.01 |     -0.01 | nn     | target      |
-|     0.01 |      0.01 | nn     | judge       |
-|    -0.07 |     -0.07 | nn     | demographic |
+|  mse | mse_se | rsq_test | rsq_train | model  | features    |
+|-----:|-------:|---------:|----------:|:-------|:------------|
+| 1.30 |   0.06 |     0.00 |      0.00 | lasso  | all         |
+| 1.30 |   0.06 |     0.00 |      0.00 | lasso  | target      |
+| 1.30 |   0.06 |     0.00 |      0.00 | lasso  | judge       |
+| 1.30 |   0.06 |     0.00 |      0.00 | lasso  | demographic |
+| 1.30 |   0.18 |     0.00 |      0.00 | ranger | all         |
+| 1.30 |   0.19 |     0.00 |      0.00 | ranger | target      |
+| 1.30 |   0.18 |     0.00 |      0.00 | ranger | judge       |
+| 1.30 |   0.18 |     0.00 |      0.00 | ranger | demographic |
+| 1.30 |   0.18 |     0.00 |      0.00 | tree   | all         |
+| 1.30 |   0.18 |     0.00 |      0.00 | tree   | target      |
+| 1.30 |   0.18 |     0.00 |      0.00 | tree   | judge       |
+| 1.30 |   0.18 |     0.00 |      0.00 | tree   | demographic |
+| 1.55 |   0.26 |    -0.13 |     -0.13 | nn     | all         |
+| 1.35 |   0.20 |     0.00 |      0.00 | nn     | target      |
+| 1.45 |   0.20 |    -0.01 |     -0.01 | nn     | judge       |
+| 1.39 |   0.24 |     0.00 |      0.00 | nn     | demographic |
 
 The best performing model (or interpretable model within 5% of the best
-overall model) is nn.judge.
+overall model) is tree.all.
 
 ### Effect of Features and Model
 
@@ -61,8 +61,8 @@ knitr::kable(tab_aov, digits = 2)
 
 | term     | etasq | partial |
 |:---------|------:|--------:|
-| model    |  0.38 |    0.45 |
-| features |  0.16 |    0.25 |
+| model    |  0.25 |    0.31 |
+| features |  0.18 |    0.24 |
 
 <div id="refs" class="references csl-bib-body hanging-indent"
 entry-spacing="0">

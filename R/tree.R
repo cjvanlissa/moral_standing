@@ -8,7 +8,7 @@ do_tree <- function(dat){
   )
 
   res_tune <- sapply(1:nrow(tune_grid), function(i){
-    pred_cv <- unlist(lapply(dat$folds, function(f){
+    sapply(dat$folds, function(f){
       Args <- list(
         formula = quote(moral_concern ~ .),
         data = dat$train[-f, ],
@@ -16,17 +16,16 @@ do_tree <- function(dat){
         control = do.call(rpart.control, args = as.list(tune_grid[i, , drop = F]))
       )
       tree_model <- do.call(rpart, args = Args)
-      predict(tree_model, newdata = dat$train[f, ])
-    }))
-    pred_cv <- pred_cv[unlist(dat$folds)]
-    mean((dat$train$moral_concern - pred_cv)^2)
+      preds <- predict(tree_model, newdata = dat$train[f, ])
+      mean((dat$train$moral_concern[f]-preds)^2)
+    })
   })
 
   Args <- list(
     formula = quote(moral_concern ~ .),
     data = dat$train,
     method = "anova",
-    control = do.call(rpart.control, args = as.list(tune_grid[which.min(res_tune), , drop = F]))
+    control = do.call(rpart.control, args = as.list(tune_grid[which.min(colMeans(res_tune)), , drop = F]))
   )
   tree_model <- do.call(rpart, args = Args)
 
@@ -37,6 +36,7 @@ do_tree <- function(dat){
     res_cv = res_tune,
     res = tree_model,
     tune_pars = as.vector(tune_grid[which.min(res_tune), , drop = FALSE]),
+    mse_cv = res_tune[, which.min(colMeans(res_tune)), drop = TRUE],
     rsq = rsq_numeric(dat$test$moral_concern, pred, mean(dat$train$moral_concern))
     , rsq_train = rsq_numeric(dat$train$moral_concern, pred_train, mean(dat$train$moral_concern))
   )

@@ -1,21 +1,74 @@
-do_nn <- function(dat_features){
+do_nn <- function(dat_features, epochs = 10){
   library(tensorflow)
   library(keras)
   reticulate::use_virtualenv("r-tensorflow")
   out_return <- vector("list", length(dat_features))
   names(out_return) <- names(dat_features)
   for(data_name in names(dat_features)){
+    # Select dataset
     dat <- dat_features[[data_name]]
+    # Get rownumbers for all folds
+    all.folds <- dat$folds
+    fold_id <- unlist(lapply(seq_along(all.folds), function(id){
+      out <- rep(id, length(all.folds[[id]]))
+      names(out) <- all.folds[[id]]
+      out
+    }))
+    fold_id <- fold_id[order(as.integer(names(fold_id)))]
     # Prep data
     train_dataset <- dat$train
     test_dataset <- dat$test
 
-    train_features <- model.matrix(moral_concern ~., dat$train)[, -1]
+    train_features <- model.matrix(moral_concern ~., dat$train)
     train_labels <- dat$train$moral_concern
 
-    test_features <- model.matrix(moral_concern ~., dat$test)[, -1]
+    test_features <- model.matrix(moral_concern ~., dat$test)
     test_labels <- dat$test$moral_concern
 
+    # Get CV mean squared errors
+    mses <- vector("numeric", length = length(dat$folds))
+    for(thisfold in seq_along(dat$folds)){
+      train_features_minusk <- model.matrix(moral_concern ~., dat$train)[!fold_id == thisfold, -1]
+      train_labels_minusk <- dat$train$moral_concern[!fold_id == thisfold]
+      train_features_k <- model.matrix(moral_concern ~., dat$train)[fold_id == thisfold, -1]
+      train_labels_k <- dat$train$moral_concern[fold_id == thisfold]
+
+
+      # Define model
+      keras_model_sequential() |>
+        layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+                    activation = 'elu', input_shape = dim(train_features_minusk)[2]) |>
+        layer_dropout(0.5) |>
+        layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+                    activation = 'elu') |>
+        layer_dropout(0.5) |>
+        layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+                    activation = 'elu') |>
+        layer_dropout(0.5) |>
+        layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+                    activation = 'elu') |>
+        layer_dropout(0.5) |>
+        layer_dense(1) ->
+        model
+
+      model |>
+        compile(
+          loss = "mse",
+          optimizer = optimizer_adam(),
+          metrics = list("mean_squared_error")
+        )
+
+      model |> fit(x = train_features_minusk,
+                   y = train_labels_minusk,
+                   validation_split = 0,
+                   verbose = 0,
+                   epochs = epochs)
+
+      pred <- predict(model, train_features_k, verbose = 0)
+      mses[thisfold] <- mean((pred-train_labels_k)^2)
+    }
+
+    # Get final model
     # Define model
     keras_model_sequential() |>
       layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
@@ -42,17 +95,18 @@ do_nn <- function(dat_features){
 
     model |> fit(x = train_features,
                  y = train_labels,
-                 validation_split = 0.2,
+                 validation_split = 0,
                  verbose = 0,
-                 epochs = 500)
+                 epochs = epochs)
 
-    pred <- predict(model, test_features)
-    pred_train <- predict(model, train_features)
+    pred <- predict(model, test_features, verbose = 0)
+    pred_train <- predict(model, train_features, verbose = 0)
     save_model_tf(model, file.path('my_model', data_name))
 
     out <- list(
       res = quote(load_model_tf(file.path('my_model', data_name))),
       tune_pars = vector("numeric"),
+      mse_cv = mses,
       rsq = rsq_numeric(test_labels, pred, mean(train_labels)),
       rsq_train =  rsq_numeric(train_labels, pred_train, mean(train_labels))
     )

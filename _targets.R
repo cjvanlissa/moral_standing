@@ -33,6 +33,8 @@ if(!inherits(tmp, "tensorflow.tensor")){
 tar_source()
 # source("other_functions.R") # Source other scripts as needed.
 set.seed(812)
+targets::tar_option_set(priority = 1)
+
 # Replace the target list below with your own:
 list(
   tar_target(
@@ -69,15 +71,17 @@ list(
   )
   , tar_target(
     name = res_nn,
-    command = do_nn(dat_features)
+    command = do_nn(dat_features, epochs = 10) # Change to 500 for real data
   )
   , tar_target(
     name = analysis_results,
     command = eval_results(dat, models = list(lasso = res_lasso, ranger = res_ranger, tree = res_tree, nn = res_nn))
   )
-  , tarchetypes::tar_render(manuscript, "manuscript.rmd", cue = tar_cue("always"))
+  , tarchetypes::tar_render(manuscript, "manuscript.rmd", cue = tar_cue("always"), priority = 0.5)
   , tar_file (
     name = create_index,
-    command = { file.rename("manuscript.html", "index.html"); return("index.html")}
+    command = { file.rename("manuscript.html", "index.html"); return("index.html")},
+    cue = tar_cue("always"),
+    priority = 0
     )
 )

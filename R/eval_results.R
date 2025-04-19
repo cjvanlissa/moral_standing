@@ -63,25 +63,41 @@ eval_results <- function(dat, models){
   models <- do.call(c, models)
 
   # Evaluate performance ----------------------------------------------------
-
+  mses <- sapply(models, function(x){
+    if("cvm" %in% names(x$mse_cv)){
+      return(x$mse_cv["cvm"])
+    } else {
+      return(mean(x$mse_cv))
+    }
+  })
+  mse_sds <- sapply(models, function(x){
+    if("cvsd" %in% names(x$mse_cv)){
+      return(x$mse_cv["cvsd"])
+    } else {
+      return(sd(x$mse_cv))
+    }
+  })
   rsqs_train <- sapply(models, `[[`, "rsq_train")
   # On test data
   rsqs_test <- rsqs_train <- sapply(models, `[[`, "rsq")
 
-  df_rsq <- data.frame(rsq_test = rsqs_test,
-                       rsq_train = rsqs_train,
-                       do.call(rbind, strsplit(names(rsqs_test), ".", fixed = TRUE)))
-  names(df_rsq)[3:4] <- c("model", "features")
+  df_rsq <- data.frame(
+    mse = mses,
+    mse_se = mse_sds,
+    rsq_test = rsqs_test,
+    rsq_train = rsqs_train,
+    do.call(rbind, strsplit(names(rsqs_test), ".", fixed = TRUE)))
+  names(df_rsq)[match(c("X1", "X2"), names(df_rsq))] <- c("model", "features")
   mod_rsq <- aov(rsq_test ~ model + features, data = df_rsq)
 
   # Choose best model
   #rsqs <- unlist(lapply(do.call(c, models), `[[`, "rsq"))
-  max_rsq <- rsqs_test[which.max(rsqs_test)]
-  if(!grepl("(lasso|tree)", names(max_rsq))){
-    within_5pct <- rsqs_test[grepl("(lasso|tree)", names(rsqs_test))]
-    within_5pct <- within_5pct[within_5pct >= .95*max_rsq]
-    if(any(grepl("(lasso|tree)", names(within_5pct)))){
-      max_rsq <- within_5pct[which.max(within_5pct)]
+  best_model <- mses[which.min(mses)]
+  if(!grepl("(lasso|tree)", names(best_model))){
+    within_se <- mses[grepl("(lasso|tree)", names(mses))]
+    within_se <- within_se[within_se <= best_model+mse_sds[which.min(mses)]]
+    if(any(grepl("(lasso|tree)", names(within_se)))){
+      best_model <- within_se[which.min(within_se)]
     }
   }
 
@@ -89,7 +105,7 @@ eval_results <- function(dat, models){
     list(
       rsqs = df_rsq,
       etasqs = etasq(mod_rsq),
-      best = names(max_rsq)
+      best = names(best_model)
     )
   )
 }

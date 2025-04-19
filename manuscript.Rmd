@@ -44,7 +44,7 @@ rownames(tab_res) <- NULL
 knitr::kable(tab_res, digits = 2)
 ```
 
-The best performing model (or interpretable model within 5% of the best overall model) is `r temp_env[["analysis_results"]][["best"]]`.
+The best performing model (or interpretable model whose cross-validated mean squared error was within 1SE of the best model's cross-validated mean squared error) is `r temp_env[["analysis_results"]][["best"]]`.
 
 ### Effect of Features and Model
 
