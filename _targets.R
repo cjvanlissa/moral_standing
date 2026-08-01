@@ -15,17 +15,7 @@ library(tuneRanger)
 library(mlr)
 library(doParallel)
 library(tensorflow)
-library(keras)
-
-tmp <- try(tf$constant("Hello TensorFlow!"))
-if(!inherits(tmp, "tensorflow.tensor")){
-  reticulate::install_python()
-  tensorflow::install_tensorflow(envname = "r-tensorflow")
-  tmp <- try(tf$constant("Hello TensorFlow!"))
-  if(!inherits(tmp, "tensorflow.tensor")){
-    stop("Tensorflow not installed.")
-  }
-}
+library(keras3)
 
 
 
@@ -77,7 +67,7 @@ list(
     name = analysis_results,
     command = eval_results(dat, models = list(lasso = res_lasso, ranger = res_ranger, tree = res_tree, nn = res_nn))
   )
-  , tarchetypes::tar_render(manuscript, "manuscript.rmd", cue = tar_cue("always"), priority = 0.5)
+  , tarchetypes::tar_render(manuscript, "manuscript.Rmd", cue = tar_cue("always"), priority = 0.5)
   , tar_file (
     name = create_index,
     command = { file.rename("manuscript.html", "index.html"); return("index.html")},

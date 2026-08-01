@@ -1,7 +1,7 @@
 do_nn <- function(dat_features, epochs = 10){
   library(tensorflow)
-  library(keras)
-  reticulate::use_virtualenv("r-tensorflow")
+  library(keras3)
+
   out_return <- vector("list", length(dat_features))
   names(out_return) <- names(dat_features)
   for(data_name in names(dat_features)){
@@ -35,30 +35,30 @@ do_nn <- function(dat_features, epochs = 10){
 
 
       # Define model
-      keras_model_sequential() |>
-        layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+      keras3::keras_model_sequential() |>
+        keras3::layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
                     activation = 'elu', input_shape = dim(train_features_minusk)[2]) |>
-        layer_dropout(0.5) |>
-        layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+        keras3::layer_dropout(0.5) |>
+        keras3::layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
                     activation = 'elu') |>
-        layer_dropout(0.5) |>
-        layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+        keras3::layer_dropout(0.5) |>
+        keras3::layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
                     activation = 'elu') |>
-        layer_dropout(0.5) |>
-        layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+        keras3::layer_dropout(0.5) |>
+        keras3::layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
                     activation = 'elu') |>
-        layer_dropout(0.5) |>
-        layer_dense(1) ->
+        keras3::layer_dropout(0.5) |>
+        keras3::layer_dense(1) ->
         model
 
       model |>
-        compile(
+        keras3::compile(
           loss = "mse",
           optimizer = optimizer_adam(),
           metrics = list("mean_squared_error")
         )
 
-      model |> fit(x = train_features_minusk,
+      model |> keras3::fit(x = train_features_minusk,
                    y = train_labels_minusk,
                    validation_split = 0,
                    verbose = 0,
@@ -70,30 +70,30 @@ do_nn <- function(dat_features, epochs = 10){
 
     # Get final model
     # Define model
-    keras_model_sequential() |>
-      layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+    keras3::keras_model_sequential() |>
+      keras3::layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
                   activation = 'elu', input_shape = dim(train_features)[2]) |>
-      layer_dropout(0.5) |>
-      layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+      keras3::layer_dropout(0.5) |>
+      keras3::layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
                   activation = 'elu') |>
-      layer_dropout(0.5) |>
-      layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+      keras3::layer_dropout(0.5) |>
+      keras3::layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
                   activation = 'elu') |>
-      layer_dropout(0.5) |>
-      layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
+      keras3::layer_dropout(0.5) |>
+      keras3::layer_dense(512, kernel_regularizer = regularizer_l2(0.0001),
                   activation = 'elu') |>
-      layer_dropout(0.5) |>
-      layer_dense(1) ->
+      keras3::layer_dropout(0.5) |>
+      keras3::layer_dense(1) ->
       model
 
     model |>
-      compile(
+      keras3::compile(
         loss = "mse",
         optimizer = optimizer_adam(),
         metrics = list("mean_squared_error")
       )
 
-    model |> fit(x = train_features,
+    model |> keras3::fit(x = train_features,
                  y = train_labels,
                  validation_split = 0,
                  verbose = 0,
@@ -101,10 +101,10 @@ do_nn <- function(dat_features, epochs = 10){
 
     pred <- predict(model, test_features, verbose = 0)
     pred_train <- predict(model, train_features, verbose = 0)
-    save_model_tf(model, file.path('my_model', data_name))
+
 
     out <- list(
-      res = quote(load_model_tf(file.path('my_model', data_name))),
+      res = NA,
       tune_pars = vector("numeric"),
       mse_cv = mses,
       rsq = rsq_numeric(test_labels, pred, mean(train_labels)),

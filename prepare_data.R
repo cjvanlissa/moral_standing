@@ -6,7 +6,7 @@
 library(worcs)
 library(tidySEM)
 
-df_full <- read.csv("./data/simdata_clean.csv")
+df_full <- read.csv("./data/data_clean.csv")
 
 # For privacy, anonymize id
 df_full[["id"]] <- as.integer(factor(df_full$id, levels = sample(unique(df_full$id))))
@@ -100,7 +100,7 @@ psychmet <- lapply(names(scales_list), function(scal){
                     items = length(indicators),
                     fits)
 
-  tab$comp_rel <- semTools::compRelSEM(res, ord.scale = any(is_ordr))
+  tab$comp_rel <- as.numeric(semTools::compRelSEM(res, ord.scale = any(is_ordr)))
   scores <- rowMeans(df_tmp[, lapply(.SD, function(x){as.numeric(as.character(x))}), .SDcols = indicators])
   return(
     list(
@@ -129,5 +129,5 @@ if(length(drop_scales) > 0){
 
 df_anal <- data.frame(df_full[, c("id", yvar, setdiff(selected_variables$variable_name, names(scales_list)))],
                       scale_scores)
-
+df_anal$gender <- factor(df_anal$gender)
 open_data(df_anal)
