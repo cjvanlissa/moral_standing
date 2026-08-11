@@ -61,7 +61,7 @@ list(
   )
   , tar_target(
     name = res_nn,
-    command = do_nn(dat_features, epochs = 10) # Change to 500 for real data
+    command = do_nn(dat_features, epochs = 500) # Change to 500 for real data
   )
   , tar_target(
     name = analysis_results,
