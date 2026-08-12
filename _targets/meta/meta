@@ -27,5 +27,5 @@ do_tree|function|d7a166e01a26ddcb
 do_lasso|function|9025f55ab36b074d
 do_ranger|function|8defe18d3ba53bca
 eval_results|function|0244c609a854539c
-manuscript|stem|f51bda0fb744dc36|2b095d5c3a836e96|2c530c1562a7fbd1|-1793997187|manuscript.md*manuscript.Rmd*manuscript_files|t20677.2382759093s|s12238b|12238|file|local|vector|||2.781||
-create_index|stem|c4bbbfdff2516909|256709ff786a7ab2|2c530c1562a7fbd1|-241907608|index.html|t20677.2382785102s|s25840b|25840|file|local|vector|||0||
+manuscript|stem|c70f033c8a8d4e39|2b095d5c3a836e96|2c530c1562a7fbd1|-1793997187|manuscript.md*manuscript.Rmd*manuscript_files|t20677.2434107447s|s12755b|12755|file|local|vector|||2.937||
+create_index|stem|d065de8ebbd37396|256709ff786a7ab2|2c530c1562a7fbd1|-241907608|index.html|t20677.2434131756s|s27588b|27588|file|local|vector|||0.016||
