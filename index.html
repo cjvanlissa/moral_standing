@@ -792,6 +792,229 @@ due to model and feature set:</p>
 </tr>
 </tbody>
 </table>
+<h2 id="interpretation">Interpretation</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># dv = &quot;cis4_nextwave&quot;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co"># X &lt;- model.matrix(as.formula(paste0(dv, &quot;~.&quot;)), temp_env$dat$train)[, -1]</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># Y &lt;- as.numeric(temp_env$dat$train[[dv]])</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co"># sdx &lt;- apply(X, 2, sd)</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>coefs <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(glmnet<span class="sc">:::</span><span class="fu">coef.glmnet</span>(temp_env<span class="sc">$</span>res_lasso<span class="sc">$</span>all<span class="sc">$</span>res, <span class="at">s =</span> <span class="st">&quot;lambda.1se&quot;</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#coefs_sxy &lt;- coefs</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#coefs_sxy[-1] &lt;- coefs[-1] * (sdx/sd(Y))</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>tab_coef <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Predictor =</span> <span class="fu">c</span>(<span class="st">&quot;Intercept&quot;</span>, <span class="fu">rownames</span>(temp_env<span class="sc">$</span>res_lasso<span class="sc">$</span>all<span class="sc">$</span>res<span class="sc">$</span>beta)), <span class="at">b =</span> coefs</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>                       <span class="co">#, beta = coefs_sxy</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>                       )</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>tab_coef <span class="ot">&lt;-</span> tab_coef[<span class="fu">order</span>(<span class="fu">abs</span>(tab_coef<span class="sc">$</span>b), <span class="at">decreasing =</span> T), , drop <span class="ot">=</span> F]</span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(tab_coef, <span class="at">caption =</span> <span class="st">&quot;LASSO regression coefficients.&quot;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">Predictor</th>
+<th align="right">b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">Intercept</td>
+<td align="right">5.3810119</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">sentience</td>
+<td align="right">0.4612834</td>
+</tr>
+<tr>
+<td align="left">9</td>
+<td align="left">vulnerable</td>
+<td align="right">0.4361314</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">beautiful</td>
+<td align="right">0.2835395</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">utility</td>
+<td align="right">0.1749957</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">harmful</td>
+<td align="right">-0.1356242</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">similar</td>
+<td align="right">0.1244913</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">socog</td>
+<td align="right">0.0616813</td>
+</tr>
+<tr>
+<td align="left">10</td>
+<td align="left">sdo</td>
+<td align="right">-0.0273549</td>
+</tr>
+<tr>
+<td align="left">22</td>
+<td align="left">empathy_ec</td>
+<td align="right">0.0257729</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">agency</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">11</td>
+<td align="left">rwa</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">12</td>
+<td align="left">hexaco_hh</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">13</td>
+<td align="left">hexaco_emo</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">14</td>
+<td align="left">hexaco_ex</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">15</td>
+<td align="left">hexaco_ag</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">16</td>
+<td align="left">hexaco_con</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">17</td>
+<td align="left">hexaco_op</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">18</td>
+<td align="left">trust</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">19</td>
+<td align="left">aot</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">20</td>
+<td align="left">moraldisgust</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">21</td>
+<td align="left">empathy_pt</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">23</td>
+<td align="left">empathy_pd</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">24</td>
+<td align="left">moralfound_care</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">25</td>
+<td align="left">moralfound_fair</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">26</td>
+<td align="left">moralfound_lib</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">27</td>
+<td align="left">moralfound_aut</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">28</td>
+<td align="left">moralfound_ing</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">29</td>
+<td align="left">moralfound_pur</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">30</td>
+<td align="left">identity_allbeings</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">31</td>
+<td align="left">util_ib</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">32</td>
+<td align="left">util_ih</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">33</td>
+<td align="left">gendermale</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">34</td>
+<td align="left">age</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">35</td>
+<td align="left">pet_childhood</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">36</td>
+<td align="left">conservative</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">37</td>
+<td align="left">religious</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">38</td>
+<td align="left">education</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr>
+<td align="left">39</td>
+<td align="left">income</td>
+<td align="right">0.0000000</td>
+</tr>
+</tbody>
+</table>
+<p>LASSO regression coefficients.</p>
 <div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 
 <div id="ref-vanlissaWORCSWorkflowOpen2021" class="csl-entry">

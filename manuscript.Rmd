@@ -55,3 +55,22 @@ tab_aov <- temp_env$analysis_results$etasqs
 knitr::kable(tab_aov, digits = 2)
 ```
 
+## Interpretation
+
+```{r}
+# dv = "cis4_nextwave"
+# X <- model.matrix(as.formula(paste0(dv, "~.")), temp_env$dat$train)[, -1]
+# Y <- as.numeric(temp_env$dat$train[[dv]])
+# 
+# sdx <- apply(X, 2, sd)
+coefs <- as.numeric(glmnet:::coef.glmnet(temp_env$res_lasso$all$res, s = "lambda.1se"))
+#coefs_sxy <- coefs
+#coefs_sxy[-1] <- coefs[-1] * (sdx/sd(Y))
+
+tab_coef <- data.frame(Predictor = c("Intercept", rownames(temp_env$res_lasso$all$res$beta)), b = coefs
+                       #, beta = coefs_sxy
+                       )
+
+tab_coef <- tab_coef[order(abs(tab_coef$b), decreasing = T), , drop = F]
+knitr::kable(tab_coef, caption = "LASSO regression coefficients.")
+```

@@ -65,6 +65,70 @@ knitr::kable(tab_aov, digits = 2)
 | model    |  0.01 |    0.45 |
 | features |  0.98 |    0.99 |
 
+## Interpretation
+
+``` r
+# dv = "cis4_nextwave"
+# X <- model.matrix(as.formula(paste0(dv, "~.")), temp_env$dat$train)[, -1]
+# Y <- as.numeric(temp_env$dat$train[[dv]])
+# 
+# sdx <- apply(X, 2, sd)
+coefs <- as.numeric(glmnet:::coef.glmnet(temp_env$res_lasso$all$res, s = "lambda.1se"))
+#coefs_sxy <- coefs
+#coefs_sxy[-1] <- coefs[-1] * (sdx/sd(Y))
+
+tab_coef <- data.frame(Predictor = c("Intercept", rownames(temp_env$res_lasso$all$res$beta)), b = coefs
+                       #, beta = coefs_sxy
+                       )
+
+tab_coef <- tab_coef[order(abs(tab_coef$b), decreasing = T), , drop = F]
+knitr::kable(tab_coef, caption = "LASSO regression coefficients.")
+```
+
+|     | Predictor          |          b |
+|:----|:-------------------|-----------:|
+| 1   | Intercept          |  5.3810119 |
+| 2   | sentience          |  0.4612834 |
+| 9   | vulnerable         |  0.4361314 |
+| 6   | beautiful          |  0.2835395 |
+| 8   | utility            |  0.1749957 |
+| 5   | harmful            | -0.1356242 |
+| 7   | similar            |  0.1244913 |
+| 4   | socog              |  0.0616813 |
+| 10  | sdo                | -0.0273549 |
+| 22  | empathy_ec         |  0.0257729 |
+| 3   | agency             |  0.0000000 |
+| 11  | rwa                |  0.0000000 |
+| 12  | hexaco_hh          |  0.0000000 |
+| 13  | hexaco_emo         |  0.0000000 |
+| 14  | hexaco_ex          |  0.0000000 |
+| 15  | hexaco_ag          |  0.0000000 |
+| 16  | hexaco_con         |  0.0000000 |
+| 17  | hexaco_op          |  0.0000000 |
+| 18  | trust              |  0.0000000 |
+| 19  | aot                |  0.0000000 |
+| 20  | moraldisgust       |  0.0000000 |
+| 21  | empathy_pt         |  0.0000000 |
+| 23  | empathy_pd         |  0.0000000 |
+| 24  | moralfound_care    |  0.0000000 |
+| 25  | moralfound_fair    |  0.0000000 |
+| 26  | moralfound_lib     |  0.0000000 |
+| 27  | moralfound_aut     |  0.0000000 |
+| 28  | moralfound_ing     |  0.0000000 |
+| 29  | moralfound_pur     |  0.0000000 |
+| 30  | identity_allbeings |  0.0000000 |
+| 31  | util_ib            |  0.0000000 |
+| 32  | util_ih            |  0.0000000 |
+| 33  | gendermale         |  0.0000000 |
+| 34  | age                |  0.0000000 |
+| 35  | pet_childhood      |  0.0000000 |
+| 36  | conservative       |  0.0000000 |
+| 37  | religious          |  0.0000000 |
+| 38  | education          |  0.0000000 |
+| 39  | income             |  0.0000000 |
+
+LASSO regression coefficients.
+
 <div id="refs" class="references csl-bib-body hanging-indent"
 entry-spacing="0">
 
