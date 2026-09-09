@@ -22,6 +22,6 @@ get_features <- function(dat, flnm){
   out <- lapply(selected_variables[, c("target attribute predictor", "judge attribute predictor", "demographic predictor")], function(i){ selected_variables$variable_name[which(i > 0)] })
   names(out) <- gsub(" .*$", "", names(out))
   out <- lapply(out, function(vs){ vs[which(vs %in% names(dat$train))]})
-  out <- c(list(all = unique(unlist(out))), out)
+  out <- c(list(all = unique(unlist(out)), primary = c(out$target, out$judge)), out)
   return(out)
 }

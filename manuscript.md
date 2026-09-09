@@ -1,6 +1,6 @@
 Towards a Predictive Model of Moral Concern
 ================
-12 August, 2026
+09 September, 2026
 
 This manuscript uses the Workflow for Open Reproducible Code in Science
 (Van Lissa et al. 2021) to ensure reproducibility and transparency. All
@@ -30,21 +30,25 @@ knitr::kable(tab_res, digits = 2)
 |  mse | mse_se | rsq_test | rsq_train | model  | features    |
 |-----:|-------:|---------:|----------:|:-------|:------------|
 | 1.37 |   0.05 |     0.55 |      0.55 | lasso  | all         |
+| 1.37 |   0.05 |     0.55 |      0.55 | lasso  | primary     |
 | 1.39 |   0.06 |     0.54 |      0.54 | lasso  | target      |
 | 2.73 |   0.09 |     0.02 |      0.02 | lasso  | judge       |
 | 2.80 |   0.09 |     0.00 |      0.00 | lasso  | demographic |
 | 1.26 |   0.18 |     0.58 |      0.58 | ranger | all         |
-| 1.27 |   0.17 |     0.59 |      0.59 | ranger | target      |
-| 2.70 |   0.27 |     0.03 |      0.03 | ranger | judge       |
-| 2.83 |   0.27 |     0.00 |      0.00 | ranger | demographic |
+| 1.25 |   0.18 |     0.58 |      0.58 | ranger | primary     |
+| 1.28 |   0.17 |     0.59 |      0.59 | ranger | target      |
+| 2.69 |   0.27 |     0.05 |      0.05 | ranger | judge       |
+| 2.83 |   0.26 |     0.00 |      0.00 | ranger | demographic |
 | 1.66 |   0.18 |     0.44 |      0.44 | tree   | all         |
+| 1.66 |   0.18 |     0.44 |      0.44 | tree   | primary     |
 | 1.66 |   0.18 |     0.44 |      0.44 | tree   | target      |
 | 2.71 |   0.27 |     0.02 |      0.02 | tree   | judge       |
 | 2.80 |   0.30 |     0.00 |      0.00 | tree   | demographic |
-| 1.60 |   0.33 |     0.49 |      0.49 | nn     | all         |
-| 1.33 |   0.19 |     0.59 |      0.59 | nn     | target      |
-| 2.88 |   0.30 |    -0.01 |     -0.01 | nn     | judge       |
-| 2.87 |   0.33 |     0.02 |      0.02 | nn     | demographic |
+| 1.68 |   0.38 |     0.48 |      0.48 | nn     | all         |
+| 1.47 |   0.25 |     0.51 |      0.51 | nn     | primary     |
+| 1.31 |   0.17 |     0.57 |      0.57 | nn     | target      |
+| 2.84 |   0.29 |    -0.05 |     -0.05 | nn     | judge       |
+| 2.84 |   0.26 |    -0.08 |     -0.08 | nn     | demographic |
 
 The best performing model (or interpretable model whose cross-validated
 mean squared error was within 1SE of the best model’s cross-validated
@@ -62,8 +66,8 @@ knitr::kable(tab_aov, digits = 2)
 
 | term     | etasq | partial |
 |:---------|------:|--------:|
-| model    |  0.01 |    0.45 |
-| features |  0.98 |    0.99 |
+| model    |  0.02 |    0.57 |
+| features |  0.97 |    0.99 |
 
 ## Interpretation
 
